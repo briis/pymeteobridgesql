@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 import os
 import logging
 import asyncio
+import json
 import time
 from pymeteobridgesql import MeteobridgeSQL
 
@@ -30,9 +31,13 @@ async def main() -> None:
     weather = MeteobridgeSQL(_host, _user, _password, _database)
     await weather.async_init()
 
-    result = await weather.async_get_data(_id, "realtime_data")
-
-    print(result)
+    result = await weather.async_get_realtime_data(_id)
+    print("")
+    print("========================================================")
+    print("ID: ", result.ID)
+    print("RAIN TODAY: ", result.raintoday)
+    print("WIND GUST: ", result.windgust)
+    print("")
 
     end = time.time()
 

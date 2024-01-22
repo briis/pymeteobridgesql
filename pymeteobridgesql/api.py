@@ -1,8 +1,12 @@
 """This module contains the code to get weather data from an MYSQL Table."""
 from __future__ import annotations
 
+import json
 import logging
 import mysql.connector
+
+from .const import SQL_REALTIME
+from .data import RealtimeData
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -40,12 +44,12 @@ class MeteobridgeSQL:
 
         self._weather_cursor = self._weatherdb.cursor()
 
-    async def async_get_data(self, id: str, table: str) -> dict:
+    async def async_get_realtime_data(self, id: str) -> RealtimeData:
         """Get the latest data from the database."""
         self._weather_cursor.execute(
-            f"SELECT JSON_OBJECT ('temperature', temperature) FROM {table} WHERE ID = '{id}'"
+            f"SELECT * FROM realtime_data WHERE ID = '{id}'"
         )
-
         result = self._weather_cursor.fetchone()
 
-        return result
+        return RealtimeData(*result)
+

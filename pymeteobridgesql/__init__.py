@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 from .api import MeteobridgeSQL
+from .data import RealtimeData
 
 __title__ = "pymeteobridgesql"
 __version__ = "1.0.0"
