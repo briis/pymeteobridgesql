@@ -1,11 +1,9 @@
 """This module contains the code to get weather data from an MYSQL Table."""
 from __future__ import annotations
 
-import json
 import logging
 import mysql.connector
 
-from .const import SQL_REALTIME
 from .data import RealtimeData
 
 _LOGGER = logging.getLogger(__name__)

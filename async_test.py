@@ -35,7 +35,11 @@ async def main() -> None:
     print("")
     print("========================================================")
     print("ID: ", result.ID)
+    print("FEELS LIKE: ", result.feels_like_temperature)
+    print("TEMPERATURE: ", result.temperature)
     print("RAIN TODAY: ", result.raintoday)
+    print("WIND BEARING: ", result.windbearing)
+    print("WIND DIRECTION: ", result.wind_direction)
     print("WIND GUST: ", result.windgust)
     print("")
 
