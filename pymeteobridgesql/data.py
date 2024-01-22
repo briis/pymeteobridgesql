@@ -52,3 +52,15 @@ class RealtimeData:
                 return self.windchill
             return self.temperature
         return None
+
+    @property
+    def pressuretrend_text(self) -> str:
+        """Converts the pressure trend to text."""
+        if self.pressuretrend is None:
+            return None
+
+        if self.pressuretrend > 0:
+            return "rising"
+        if self.pressuretrend < 0:
+            return "falling"
+        return "steady"

@@ -1,2 +1,4 @@
-# pymeteobridgesql
-Python Module to Read Meteobridge Data from a MYSQL Database
+# Meteobridge MySQL Data Module
+Python Module to read Meteobridge Data from a MySQL Database.
+
+More informarion to come...
