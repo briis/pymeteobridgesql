@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 import os
 import logging
 import asyncio
-import mysql.connector
 import time
 from pymeteobridgesql import MeteobridgeSQL
 
