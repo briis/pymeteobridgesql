@@ -11,6 +11,7 @@ import logging
 import asyncio
 import mysql.connector
 import time
+from pymeteobridgesql import MeteobridgeSQL
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -27,17 +28,10 @@ async def main() -> None:
     _database = os.getenv("DATABASE")
     _id = os.getenv("ID")
 
-    weatherdb = mysql.connector.connect(
-        host=_host,
-        user=_user,
-        password=_password,
-        database=_database
-    )
+    weather = MeteobridgeSQL(_host, _user, _password, _database)
+    await weather.async_init()
 
-    weather_cursor = weatherdb.cursor()
-    weather_cursor.execute(f"SELECT JSON_OBJECT ('temperature', temperature) FROM realtime_data WHERE ID = '{_id}'")
-
-    result = weather_cursor.fetchone()
+    result = await weather.async_get_data(_id, "realtime_data")
 
     print(result)
 
