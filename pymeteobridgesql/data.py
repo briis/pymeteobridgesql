@@ -31,6 +31,12 @@ class RealtimeData:
     solarrad: float
     solarraddaymax: float
     pressuretrend: float
+    mb_ip: str
+    mb_swversion: str
+    mb_buildnum: str
+    mb_platform: str
+    mb_station: str
+    mb_stationname: str
 
     @property
     def wind_direction(self) -> str:
@@ -64,3 +70,13 @@ class RealtimeData:
         if self.pressuretrend < 0:
             return "falling"
         return "steady"
+
+@dataclasses.dataclass
+class StationData:
+    ID: str
+    mb_ip: str
+    mb_swversion: str
+    mb_buildnum: str
+    mb_platform: str
+    mb_station: str
+    mb_stationname: str

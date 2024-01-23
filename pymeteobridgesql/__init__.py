@@ -3,8 +3,8 @@
 
 from __future__ import annotations
 
-from .api import MeteobridgeSQL
-from .data import RealtimeData
+from .api import MeteobridgeSQL, MeteobridgeSQLDatabaseConnectionError, MeteobridgeSQLDataError
+from .data import RealtimeData, StationData
 
 __title__ = "pymeteobridgesql"
 __version__ = "1.0.0"

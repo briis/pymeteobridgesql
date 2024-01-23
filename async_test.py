@@ -28,20 +28,40 @@ async def main() -> None:
     _database = os.getenv("DATABASE")
     _id = os.getenv("ID")
 
-    weather = MeteobridgeSQL(_host, _user, _password, _database)
-    await weather.async_init()
+    try:
+        weather = MeteobridgeSQL(_host, _user, _password, _database)
+        await weather.async_init()
 
-    result = await weather.async_get_realtime_data(_id)
-    print("")
-    print("========================================================")
-    print("ID: ", result.ID)
-    print("FEELS LIKE: ", result.feels_like_temperature)
-    print("TEMPERATURE: ", result.temperature)
-    print("RAIN TODAY: ", result.raintoday)
-    print("WIND BEARING: ", result.windbearing)
-    print("WIND DIRECTION: ", result.wind_direction)
-    print("WIND GUST: ", result.windgust)
-    print("")
+        result = await weather.async_get_realtime_data(_id)
+        print("")
+        print("========================================================")
+        print("ID: ", result.ID)
+        print("FEELS LIKE: ", result.feels_like_temperature)
+        print("TEMPERATURE: ", result.temperature)
+        print("RAIN TODAY: ", result.raintoday)
+        print("WIND BEARING: ", result.windbearing)
+        print("WIND DIRECTION: ", result.wind_direction)
+        print("WIND GUST: ", result.windgust)
+        print("")
+
+    except Exception as err:
+        print(err)
+
+    try:
+        result = await weather.async_get_station_data(_id)
+        print("")
+        print("========================================================")
+        print("ID: ", result.ID)
+        print("IP: ", result.mb_ip)
+        print("SW Version: ", result.mb_swversion)
+        print("BUILD NUM: ", result.mb_buildnum)
+        print("PLATFORM: ", result.mb_platform)
+        print("STATION: ", result.mb_station)
+        print("STATION NAME: ", result.mb_stationname)
+        print("")
+
+    except Exception as err:
+        print(err)
 
     end = time.time()
 
