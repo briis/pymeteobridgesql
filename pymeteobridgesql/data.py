@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import dataclasses
+import math
 
 @dataclasses.dataclass
 class RealtimeData:
@@ -38,6 +39,16 @@ class RealtimeData:
     mb_station: str
     mb_stationname: str
     elevation: int
+
+    @property
+    def absolute_humidity(self) -> float:
+        """Aboslute Humidity (g.m-3)."""
+        if self.temperature is None or self.humidity is None:
+            return None
+
+        kelvin = self.temperature + 273.16
+        humidity = self.humidity / 100
+        return (1320.65 / kelvin) * humidity * (10 ** ((7.4475 * (kelvin - 273.14)) / (kelvin - 39.44)))
 
     @property
     def beaufort_description(self) -> str:
@@ -79,6 +90,15 @@ class RealtimeData:
         return None
 
     @property
+    def freezing_altitude(self) -> float:
+        """Freezing Altitude."""
+        if self.elevation is None or self.temperature is None:
+            return None
+
+        _freezing_line = (192 * self.temperature) + self.elevation
+        return 0 if _freezing_line < 0 else _freezing_line
+
+    @property
     def pressuretrend_text(self) -> str:
         """Converts the pressure trend to text."""
         if self.pressuretrend is None:
@@ -108,6 +128,27 @@ class RealtimeData:
             if self.uv >= float(key):
                 return value
         return None
+
+    @property
+    def visibility(self) -> float:
+        """Visibility (km)."""
+        if self.elevation is None or self.temperature is None or self.dewpoint is None:
+            return None
+
+        _elevation_min = float(2)
+        if self.elevation > 2:
+            _elevation_min = self.elevation
+
+        _max_visibility = float(3.56972 * math.sqrt(_elevation_min))
+        _percent_reduction_a = float((1.13 * abs(self.temperature - self.dewpoint) - 1.15) / 10)
+        if _percent_reduction_a > 1:
+            _percent_reduction = float(1)
+        elif _percent_reduction_a < 0.025:
+            _percent_reduction = 0.025
+        else:
+            _percent_reduction = _percent_reduction_a
+
+        return float(_max_visibility * _percent_reduction)
 
     @property
     def wind_direction(self) -> str:
