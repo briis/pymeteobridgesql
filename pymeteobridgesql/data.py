@@ -158,7 +158,7 @@ class RealtimeData:
 
         directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
         index = round(self.windbearing / 22.5) % 16
-        return directions[index]
+        return directions[index].lower()
 
 @dataclasses.dataclass
 class StationData:
