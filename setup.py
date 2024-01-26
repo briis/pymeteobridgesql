@@ -7,7 +7,7 @@ with open("README.md") as fh:
 
 setuptools.setup(
     name="pymeteobridgesql",
-    version="1.0.3",
+    version="1.0.4",
     author="briis",
     author_email="bjarne@briis.com",
     description="Gets weather data from a MySQL table",
