@@ -1,3 +1,12 @@
+# Release 1.0.4
+
+**Date**: `2024-01-26`
+
+## Changes
+
+- Made direction string lowercase to conform with Home Assistant requirements
+
+
 # Release 1.0.3
 
 **Date**: `2024-01-26`
