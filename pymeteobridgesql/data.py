@@ -51,6 +51,11 @@ class RealtimeData:
         return (1320.65 / kelvin) * humidity * (10 ** ((7.4475 * (kelvin - 273.14)) / (kelvin - 39.44)))
 
     @property
+    def aqi(self) -> int:
+        """Air Quality Index."""
+        return aqi_from_pm25(self.pm25)
+
+    @property
     def beaufort_description(self) -> str:
         """Beaufort Textual Description."""
 
@@ -159,11 +164,6 @@ class RealtimeData:
         directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
         index = round(self.windbearing / 22.5) % 16
         return directions[index].lower()
-
-    @property
-    def aqi(self) -> int:
-        """Air Quality Index."""
-        return aqi_from_pm25(self.pm25)
 
 
 @dataclasses.dataclass
