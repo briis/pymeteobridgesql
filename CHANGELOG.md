@@ -1,3 +1,12 @@
+# Release 1.0.5
+
+**Date**: `2024-01-XX`
+
+## Changes
+
+- Added Air Quality calculated sensor (AQI)
+
+
 # Release 1.0.4
 
 **Date**: `2024-01-26`

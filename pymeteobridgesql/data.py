@@ -160,6 +160,12 @@ class RealtimeData:
         index = round(self.windbearing / 22.5) % 16
         return directions[index].lower()
 
+    @property
+    def aqi(self) -> int:
+        """Air Quality Index."""
+        return aqi_from_pm25(self.pm25)
+
+
 @dataclasses.dataclass
 class StationData:
     ID: str
@@ -169,3 +175,39 @@ class StationData:
     mb_platform: str
     mb_station: str
     mb_stationname: str
+
+def aqi_from_pm25(pm25: float) -> int:
+    """Calculate the Air Quality Index from the PM2.5 value."""
+    if pm25 is None:
+        return None
+
+    if pm25 > 500:
+        return 500
+    if pm25 < 0:
+        return 0
+
+    if pm25 > 350.5:
+        return calcAQI(pm25, 500, 401, 500, 350.5)
+    if pm25 > 250.5:
+        return calcAQI(pm25, 400, 301, 350.4, 250.5)
+    if pm25 > 150.5:
+        return calcAQI(pm25, 300, 201, 250.4, 150.5)
+    if pm25 > 55.5:
+        return calcAQI(pm25, 200, 151, 150.4, 55.5)
+    if pm25 > 35.5:
+        return calcAQI(pm25, 150, 101, 55.4, 35.5)
+    if pm25 > 12.1:
+        return calcAQI(pm25, 100, 51, 35.4, 12.1)
+    if pm25 > 0:
+        return calcAQI(pm25, 50, 0, 12, 0)
+    return None
+
+def calcAQI(pm25: float, ih: int, il: int, bph: int, bpl: int) -> float:
+    """Calculate the Air Quality Index from the PM2.5 value."""
+    if pm25 is None:
+        return None
+
+    _val1 = (ih - il)
+    _val2 = (bph - bpl)
+    _val3 = (pm25 - bpl)
+    return float(_val1 / _val2 * _val3 + il)
