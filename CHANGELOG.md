@@ -1,6 +1,6 @@
 # Release 1.0.5
 
-**Date**: `2024-01-XX`
+**Date**: `2024-01-28`
 
 ## Changes
 
