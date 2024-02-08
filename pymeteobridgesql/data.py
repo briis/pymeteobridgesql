@@ -84,6 +84,14 @@ class RealtimeData:
         return None
 
     @property
+    def cloud_base(self) -> float:
+        """Cloud Base (km)."""
+        if self.elevation is None or self.temperature is None or self.dewpoint is None:
+            return None
+
+        return (self.temperature - self.dewpoint) * 126 + self.elevation
+
+    @property
     def feels_like_temperature(self) -> float:
         """Calculate feels like temperature using windchill and heatindex."""
         if self.windchill is not None and self.heatindex is not None and self.temperature is not None and self.humidity is not None and self.windspeedavg is not None:
