@@ -1,3 +1,11 @@
+# Release 1.0.6
+
+**Date**: `2024-02-08`
+
+## Changes
+
+- Added cloud base as calculated sensor
+
 # Release 1.0.5
 
 **Date**: `2024-01-28`
@@ -5,7 +13,6 @@
 ## Changes
 
 - Added Air Quality calculated sensor (AQI)
-
 
 # Release 1.0.4
 
