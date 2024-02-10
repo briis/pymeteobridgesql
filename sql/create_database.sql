@@ -39,7 +39,7 @@ CREATE TABLE `realtime_data` (
 DROP TABLE IF EXISTS `forecast_daily`;
 CREATE TABLE `forecast_daily` (
   `day_num` INT NOT NULL,
-  `date` DATE NULL DEFAULT NULL ,
+  `datetime` DATETIME NULL DEFAULT NULL ,
   `temperature` FLOAT NULL DEFAULT NULL ,
   `temp_low` FLOAT NULL DEFAULT NULL ,
   `description` VARCHAR(250) NULL DEFAULT NULL ,

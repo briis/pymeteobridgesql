@@ -62,7 +62,7 @@ foreach($forecastdata["days"] as $value) {
     $epoch = $value["datetimeEpoch"];
     $dt = new DateTime("@$epoch");
     $dt->setTimezone($tz);
-    $jobj_fcst->datetime = $dt->format('Y-m-d');
+    $jobj_fcst->datetime = $dt->format('Y-m-d 00:00:00');
     $jobj_fcst->native_temperature = $value["tempmax"];
     $jobj_fcst->icon = conditionState($value["icon"]);
     $jobj_fcst->description = $value["description"];
@@ -74,9 +74,9 @@ foreach($forecastdata["days"] as $value) {
     $jobj_fcst->native_wind_speed = kmh2ms($value["windspeed"]);
     $jobj_fcst->native_wind_gust = kmh2ms($value["windgust"]);
 
-    $sql = "INSERT INTO `forecast_daily` (`day_num`, `date`, `temperature`, `temp_low`, `description`, `icon`, `precipitation_probability`, `precipitation`, `pressure`, `wind_bearing`, `wind_speed`, `wind_gust`) ";
+    $sql = "INSERT INTO `forecast_daily` (`day_num`, `datetime`, `temperature`, `temp_low`, `description`, `icon`, `precipitation_probability`, `precipitation`, `pressure`, `wind_bearing`, `wind_speed`, `wind_gust`) ";
     $sql = $sql . "VALUES (".$day_num.",'".$jobj_fcst->datetime."',".$jobj_fcst->native_temperature.",".$jobj_fcst->native_templow.",'".$jobj_fcst->description."','".$jobj_fcst->icon."',".$jobj_fcst->precipitation_probability."," .$jobj_fcst->native_precipitation."," .$jobj_fcst->native_pressure.",".$jobj_fcst->wind_bearing.",".$jobj_fcst->native_wind_speed.",".$jobj_fcst->native_wind_gust.") ";
-    $sql = $sql . "ON DUPLICATE KEY UPDATE `date`='".$jobj_fcst->datetime."', `temperature`=".$jobj_fcst->native_temperature.", `temp_low`=".$jobj_fcst->native_templow.", `description`='".$jobj_fcst->description."', `icon`='".$jobj_fcst->icon."', `precipitation_probability`=".$jobj_fcst->precipitation_probability.", `precipitation`=".$jobj_fcst->native_precipitation.", `pressure`=".$jobj_fcst->native_pressure.", `wind_bearing`=".$jobj_fcst->wind_bearing.", `wind_speed`=".$jobj_fcst->native_wind_speed.", `wind_gust`=".$jobj_fcst->native_wind_gust;
+    $sql = $sql . "ON DUPLICATE KEY UPDATE `datetime`='".$jobj_fcst->datetime."', `temperature`=".$jobj_fcst->native_temperature.", `temp_low`=".$jobj_fcst->native_templow.", `description`='".$jobj_fcst->description."', `icon`='".$jobj_fcst->icon."', `precipitation_probability`=".$jobj_fcst->precipitation_probability.", `precipitation`=".$jobj_fcst->native_precipitation.", `pressure`=".$jobj_fcst->native_pressure.", `wind_bearing`=".$jobj_fcst->wind_bearing.", `wind_speed`=".$jobj_fcst->native_wind_speed.", `wind_gust`=".$jobj_fcst->native_wind_gust;
     ++$day_num;
 
     if (!mysqli_query($conn, $sql)) {

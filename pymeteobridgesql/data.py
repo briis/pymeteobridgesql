@@ -196,7 +196,7 @@ class ForecastHourly:
 @dataclasses.dataclass
 class ForecastDaily:
     day_num: int
-    date: datetime.date
+    datetime: datetime.datetime
     temperature: float
     temp_low: float
     description: str

@@ -9,9 +9,8 @@ from dotenv import load_dotenv
 import os
 import logging
 import asyncio
-import json
 import time
-from pymeteobridgesql import MeteobridgeSQL, ForecastDaily
+from pymeteobridgesql import MeteobridgeSQL
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -93,6 +92,8 @@ async def main() -> None:
 
     except Exception as err:
         print(err)
+
+    await weather.async_disconnect()
 
     end = time.time()
 

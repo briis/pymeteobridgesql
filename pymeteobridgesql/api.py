@@ -52,6 +52,13 @@ class MeteobridgeSQL:
 
         self._weather_cursor = self._weatherdb.cursor()
 
+    async def async_disconnect(self) -> None:
+        """Disconnect from the database."""
+        if self._weather_cursor is not None:
+            self._weather_cursor.close()
+        if self._weatherdb is not None:
+            self._weatherdb.close()
+
     async def async_get_realtime_data(self, id: str) -> RealtimeData:
         """Get the latest data from the database."""
 
