@@ -1,3 +1,13 @@
+# Release 1.1.2
+
+**Date**: `NOT RELEASED`
+
+## Changes
+
+- Ensure we always the next 48 hours of Hourly Forecast data.
+
+
+
 # Release 1.1.1
 
 **Date**: `2024-02-10`
