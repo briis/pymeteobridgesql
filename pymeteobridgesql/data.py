@@ -39,6 +39,8 @@ class RealtimeData:
     mb_station: str
     mb_stationname: str
     elevation: int
+    description: str
+    icon: str
 
     @property
     def absolute_humidity(self) -> float:
