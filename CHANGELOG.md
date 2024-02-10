@@ -1,3 +1,13 @@
+# Release 1.1.1
+
+**Date**: `2024-02-10`
+
+## Changes
+
+- Added new function `async_disconnect` to ensure connection to the database is closed.
+- Converted the date field in the `ForecastDaily` table to a `datetime`
+
+
 # Release 1.1.0
 
 **Date**: `2024-02-10`
