@@ -1,3 +1,12 @@
+# Release 1.0.8
+
+**Date**: `2024-02-10`
+
+## Changes
+
+- Added new function `async_get_forecast` to get etiher the hourly our daily weather forecast. To get Hourly data use `True` as parameter.
+
+
 # Release 1.0.7
 
 **Date**: `2024-02-10`
