@@ -79,7 +79,7 @@ class MeteobridgeSQL:
         return StationData(*result)
 
 
-    async def async_get_forecast(self, hourly: bool) -> any:
+    async def async_get_forecast(self, hourly: bool=False) -> any:
         """Get the latest forecast."""
 
         result_array = []
