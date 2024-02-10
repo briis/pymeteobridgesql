@@ -1,3 +1,13 @@
+# Release 1.0.7
+
+**Date**: `2024-02-10`
+
+## Changes
+
+- Added condition icon and forecast description to realtime data
+- Preparing for adding Weather Forecast from Visual Crossing
+
+
 # Release 1.0.6
 
 **Date**: `2024-02-08`
