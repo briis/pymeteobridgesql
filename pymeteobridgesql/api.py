@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 import mysql.connector
 
-from .data import RealtimeData, StationData
+from .data import ForecastDaily, ForecastHourly, RealtimeData, StationData
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -79,17 +79,30 @@ class MeteobridgeSQL:
         return StationData(*result)
 
 
-    async def async_get_forecast(self, hourly: bool) -> RealtimeData:
+    async def async_get_forecast(self, hourly: bool) -> any:
         """Get the latest forecast."""
 
+        result_array = []
         if hourly:
             try:
                 self._weather_cursor.execute(
                     "SELECT* FROM forecast_hourly WHERE `datetime` >= NOW();"
                 )
-                result = self._weather_cursor.fetchone()
+                result = self._weather_cursor.fetchall()
+                for row in result:
+                    result_array.append(ForecastHourly(*row))
             except mysql.connector.Error as err:
-                raise MeteobridgeSQLDataError(f"Failed to lookup data in the database: {err.msg}")
+                raise MeteobridgeSQLDataError(f"Failed to lookup hourly forecast in the database: {err.msg}")
+        else:
+            try:
+                self._weather_cursor.execute(
+                    "SELECT* FROM forecast_daily;"
+                )
+                result = self._weather_cursor.fetchall()
+                for row in result:
+                    result_array.append(ForecastDaily(*row))
+            except mysql.connector.Error as err:
+                raise MeteobridgeSQLDataError(f"Failed to lookup daily forecast in the database: {err.msg}")
 
-            return RealtimeData(*result)
+        return result_array
 

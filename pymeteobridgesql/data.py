@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import dataclasses
+import datetime
 import math
 
 @dataclasses.dataclass
@@ -175,6 +176,37 @@ class RealtimeData:
         index = round(self.windbearing / 22.5) % 16
         return directions[index].lower()
 
+@dataclasses.dataclass
+class ForecastHourly:
+    hour_num: int
+    datetime: datetime.datetime
+    temperature: float
+    apparent_temperature: float
+    humidity: int
+    description: str
+    icon: str
+    precipitation_probability: int
+    precipitation: float
+    pressure: float
+    wind_bearing: int
+    wind_speed: float
+    wind_gust: float
+    uv_index: float
+
+@dataclasses.dataclass
+class ForecastDaily:
+    day_num: int
+    date: datetime.date
+    temperature: float
+    temp_low: float
+    description: str
+    icon: str
+    precipitation_probability: int
+    precipitation: float
+    pressure: float
+    wind_bearing: int
+    wind_speed: float
+    wind_gust: float
 
 @dataclasses.dataclass
 class StationData:
@@ -221,3 +253,5 @@ def calcAQI(pm25: float, ih: int, il: int, bph: int, bpl: int) -> float:
     _val2 = (bph - bpl)
     _val3 = (pm25 - bpl)
     return float(_val1 / _val2 * _val3 + il)
+
+
