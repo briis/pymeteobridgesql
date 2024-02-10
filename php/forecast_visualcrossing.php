@@ -85,7 +85,7 @@ foreach($forecastdata["days"] as $value) {
 
     // Loop through the Hours for this day
     // But only for the first two days
-    if ($day_num > 3) {
+    if ($day_num > 4) {
         continue;
     }
 
