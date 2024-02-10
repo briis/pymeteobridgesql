@@ -36,7 +36,7 @@ CREATE TABLE `realtime_data` (
   CONSTRAINT `PRIMARY` PRIMARY KEY (`ID`),
   CONSTRAINT `primary_index` UNIQUE (`ID`)
 );
-
+DROP TABLE IF EXISTS `forecast_daily`;
 CREATE TABLE `forecast_daily` (
   `day_num` INT NOT NULL,
   `date` DATE NULL DEFAULT NULL ,
@@ -46,10 +46,29 @@ CREATE TABLE `forecast_daily` (
   `icon` VARCHAR(50) NULL DEFAULT NULL ,
   `precipitation_probability` INT NULL DEFAULT NULL ,
   `precipitation` FLOAT NULL DEFAULT NULL ,
+  `pressure` FLOAT NULL DEFAULT NULL ,
   `wind_bearing` INT NULL DEFAULT NULL ,
   `wind_speed` FLOAT NULL DEFAULT NULL ,
   `wind_gust` FLOAT NULL DEFAULT NULL ,
   CONSTRAINT `PRIMARY` PRIMARY KEY (`day_num`)
+);
+
+CREATE TABLE `forecast_hourly` (
+  `hour_num` INT NOT NULL,
+  `datetime` DATETIME NULL DEFAULT NULL ,
+  `temperature` FLOAT NULL DEFAULT NULL ,
+  `apparent_temperature` FLOAT NULL DEFAULT NULL ,
+  `humidity` INT NULL DEFAULT NULL ,
+  `description` VARCHAR(250) NULL DEFAULT NULL ,
+  `icon` VARCHAR(50) NULL DEFAULT NULL ,
+  `precipitation_probability` INT NULL DEFAULT NULL ,
+  `precipitation` FLOAT NULL DEFAULT NULL ,
+  `pressure` FLOAT NULL DEFAULT NULL ,
+  `wind_bearing` INT NULL DEFAULT NULL ,
+  `wind_speed` FLOAT NULL DEFAULT NULL ,
+  `wind_gust` FLOAT NULL DEFAULT NULL ,
+  `uv_index` FLOAT NULL DEFAULT NULL ,
+  CONSTRAINT `PRIMARY` PRIMARY KEY (`hour_num`)
 );
 
 -- Once the empty table has been created you need to insert a row, that then later can be updated from the Meteobridge device

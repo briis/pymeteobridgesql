@@ -45,16 +45,18 @@ if (!$conn) {
 $tz = new DateTimeZone($timezone);
 $forecastdata = json_decode($resp, TRUE);
 
-$// Update Current Weather
-$current_icon = $forecastdata["currentConditions"]["icon"];
+// Update Current Weather
+$currentdata = $forecastdata["currentConditions"];
+$icon = conditionState($currentdata["icon"]);
 $current_description = $forecastdata["description"];
-$sql = "UPDATE `realtime_data` SET `description` = '".$current_description."', `icon` = '".conditionState($current_icon)."' WHERE `ID` = '".$station_id."'";
+$sql = "UPDATE `realtime_data` SET `description` = '".$current_description."', `icon` = '".$icon."' WHERE `ID` = '".$station_id."'";
 if (!mysqli_query($conn, $sql)) {
     echo "Error: " . $sql . "\n" . mysqli_error($conn). "\n";
 }
 
 // Add Daily Forecast
 $day_num = 1;
+$hour_num = 1;
 foreach($forecastdata["days"] as $value) {
     $jobj_fcst = new StdClass;
     $epoch = $value["datetimeEpoch"];
@@ -72,14 +74,49 @@ foreach($forecastdata["days"] as $value) {
     $jobj_fcst->native_wind_speed = kmh2ms($value["windspeed"]);
     $jobj_fcst->native_wind_gust = kmh2ms($value["windgust"]);
 
-    $sql = "INSERT INTO `forecast_daily` (`day_num`, `date`, `temperature`, `temp_low`, `description`, `icon`, `precipitation_probability`, `precipitation`, `wind_bearing`, `wind_speed`, `wind_gust`) ";
-    $sql = $sql . "VALUES (".$day_num.",'".$jobj_fcst->datetime."',".$jobj_fcst->native_temperature.",".$jobj_fcst->native_templow.",'".$jobj_fcst->description."','".$jobj_fcst->icon."',".$jobj_fcst->precipitation_probability."," .$jobj_fcst->native_precipitation.",".$jobj_fcst->wind_bearing.",".$jobj_fcst->native_wind_speed.",".$jobj_fcst->native_wind_gust.") ";
-    $sql = $sql . "ON DUPLICATE KEY UPDATE `date`='".$jobj_fcst->datetime."', `temperature`=".$jobj_fcst->native_temperature.", `temp_low`=".$jobj_fcst->native_templow.", `description`='".$jobj_fcst->description."', `icon`='".$jobj_fcst->icon."', `precipitation_probability`=".$jobj_fcst->precipitation_probability.", `precipitation`=".$jobj_fcst->native_precipitation.", `wind_bearing`=".$jobj_fcst->wind_bearing.", `wind_speed`=".$jobj_fcst->native_wind_speed.", `wind_gust`=".$jobj_fcst->native_wind_gust;
-    $day_num = $day_num + 1;
+    $sql = "INSERT INTO `forecast_daily` (`day_num`, `date`, `temperature`, `temp_low`, `description`, `icon`, `precipitation_probability`, `precipitation`, `pressure`, `wind_bearing`, `wind_speed`, `wind_gust`) ";
+    $sql = $sql . "VALUES (".$day_num.",'".$jobj_fcst->datetime."',".$jobj_fcst->native_temperature.",".$jobj_fcst->native_templow.",'".$jobj_fcst->description."','".$jobj_fcst->icon."',".$jobj_fcst->precipitation_probability."," .$jobj_fcst->native_precipitation."," .$jobj_fcst->native_pressure.",".$jobj_fcst->wind_bearing.",".$jobj_fcst->native_wind_speed.",".$jobj_fcst->native_wind_gust.") ";
+    $sql = $sql . "ON DUPLICATE KEY UPDATE `date`='".$jobj_fcst->datetime."', `temperature`=".$jobj_fcst->native_temperature.", `temp_low`=".$jobj_fcst->native_templow.", `description`='".$jobj_fcst->description."', `icon`='".$jobj_fcst->icon."', `precipitation_probability`=".$jobj_fcst->precipitation_probability.", `precipitation`=".$jobj_fcst->native_precipitation.", `pressure`=".$jobj_fcst->native_pressure.", `wind_bearing`=".$jobj_fcst->wind_bearing.", `wind_speed`=".$jobj_fcst->native_wind_speed.", `wind_gust`=".$jobj_fcst->native_wind_gust;
+    ++$day_num;
 
     if (!mysqli_query($conn, $sql)) {
         echo "Error: " . $sql . "\n" . mysqli_error($conn). "\n";
     }
+
+    // Loop through the Hours for this day
+    // But only for the first two days
+    if ($day_num > 3) {
+        continue;
+    }
+
+    foreach($value["hours"] as $hour) {
+        $jobj_hour = new StdClass;
+        $epoch = $hour["datetimeEpoch"];
+        $dt = new DateTime("@$epoch");
+        $dt->setTimezone($tz);
+        $jobj_hour->datetime = $dt->format('Y-m-d H:00:00');
+        $jobj_hour->native_temperature = $hour["temp"];
+        $jobj_hour->apparent_temperature = $hour["feelslike"];
+        $jobj_hour->description = $hour["conditions"];
+        $jobj_hour->icon = conditionState($hour["icon"]);
+        $jobj_hour->humidity = $hour["humidity"];
+        $jobj_hour->native_precipitation = $hour["precip"];
+        $jobj_hour->precipitation_probability = $hour["precipprob"];
+        $jobj_hour->native_pressure = $hour["pressure"];
+        $jobj_hour->wind_bearing = $hour["winddir"];
+        $jobj_hour->native_wind_speed = kmh2ms($hour["windspeed"]);
+        $jobj_hour->native_wind_gust = kmh2ms($hour["windgust"]);
+        $jobj_hour->uvindex = $hour["uvindex"];
+
+        $sql = "INSERT INTO `forecast_hourly` (`hour_num`, `datetime`, `temperature`, `apparent_temperature`, `description`, `icon`, `humidity`, `precipitation_probability`, `precipitation`, `pressure`, `wind_bearing`, `wind_speed`, `wind_gust`, `uv_index`) ";
+        $sql = $sql . "VALUES (".$hour_num.",'".$jobj_hour->datetime."',".$jobj_hour->native_temperature.",".$jobj_hour->apparent_temperature.",'".$jobj_hour->description."','".$jobj_hour->icon."',".$jobj_hour->humidity.",".$jobj_hour->precipitation_probability.",".$jobj_hour->native_precipitation."," .$jobj_hour->native_pressure.",".$jobj_hour->wind_bearing.",".$jobj_hour->native_wind_speed.",".$jobj_hour->native_wind_gust.",".$jobj_hour->uvindex.") ";
+        $sql = $sql . "ON DUPLICATE KEY UPDATE `datetime`='".$jobj_hour->datetime."', `temperature`=".$jobj_hour->native_temperature.", `apparent_temperature`=".$jobj_hour->apparent_temperature.", `description`='".$jobj_hour->description."', `icon`='".$jobj_hour->icon."', `humidity`=".$jobj_hour->humidity.", `precipitation_probability`=".$jobj_hour->precipitation_probability.", `precipitation`=".$jobj_hour->native_precipitation.", `pressure`=".$jobj_hour->native_pressure.", `wind_bearing`=".$jobj_hour->wind_bearing.", `wind_speed`=".$jobj_hour->native_wind_speed.", `wind_gust`=".$jobj_hour->native_wind_gust.", `uv_index`=".$jobj_hour->uvindex;
+        ++$hour_num;
+
+        if (!mysqli_query($conn, $sql)) {
+            echo "Error: " . $sql . "\n" . mysqli_error($conn). "\n";
+        }
+}
 }
 
 mysqli_close($conn);

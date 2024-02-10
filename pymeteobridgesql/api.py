@@ -79,3 +79,17 @@ class MeteobridgeSQL:
         return StationData(*result)
 
 
+    async def async_get_forecast(self, hourly: bool) -> RealtimeData:
+        """Get the latest forecast."""
+
+        if hourly:
+            try:
+                self._weather_cursor.execute(
+                    "SELECT* FROM forecast_hourly WHERE `datetime` >= NOW();"
+                )
+                result = self._weather_cursor.fetchone()
+            except mysql.connector.Error as err:
+                raise MeteobridgeSQLDataError(f"Failed to lookup data in the database: {err.msg}")
+
+            return RealtimeData(*result)
+
