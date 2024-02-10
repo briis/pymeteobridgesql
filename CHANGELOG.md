@@ -4,7 +4,7 @@
 
 ## Changes
 
-- Ensure we always the next 48 hours of Hourly Forecast data.
+- Ensure we always retrieve the next 48 hours of Hourly Forecast data.
 
 
 
