@@ -93,7 +93,7 @@ class MeteobridgeSQL:
         if hourly:
             try:
                 self._weather_cursor.execute(
-                    "SELECT* FROM forecast_hourly WHERE `datetime` >= NOW();"
+                    "SELECT* FROM forecast_hourly WHERE `datetime` >= NOW() LIMIT 48;"
                 )
                 result = self._weather_cursor.fetchall()
                 for row in result:
