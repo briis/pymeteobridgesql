@@ -75,6 +75,7 @@ async def main() -> None:
             print("========================================================")
             print("DATE: ", row.datetime)
             print("TEMP: ", row.temperature)
+            print("ICON: ", row.icon)
             print("")
 
     except Exception as err:
@@ -85,8 +86,9 @@ async def main() -> None:
         for row in result:
             print("")
             print("========================================================")
-            print("DATE: ", row.date)
+            print("DATE: ", row.datetime)
             print("TEMP: ", row.temperature)
+            print("ICON: ", row.icon)
             print("CONDITION: ", row.description)
             print("")
 
