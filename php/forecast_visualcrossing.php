@@ -49,7 +49,8 @@ $forecastdata = json_decode($resp, TRUE);
 $currentdata = $forecastdata["currentConditions"];
 $icon = conditionState($currentdata["icon"]);
 $current_description = $forecastdata["description"];
-$sql = "UPDATE `realtime_data` SET `description` = '".$current_description."', `icon` = '".$icon."' WHERE `ID` = '".$station_id."'";
+$current_condtions = $currentdata["conditions"];
+$sql = "UPDATE `realtime_data` SET `description` = '".$current_description."', `icon` = '".$icon."', `conditions` = '".$current_condtions."' WHERE `ID` = '".$station_id."'";
 if (!mysqli_query($conn, $sql)) {
     echo "Error: " . $sql . "\n" . mysqli_error($conn). "\n";
 }

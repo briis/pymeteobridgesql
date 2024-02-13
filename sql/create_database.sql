@@ -33,6 +33,7 @@ CREATE TABLE `realtime_data` (
   `elevation` INT NULL DEFAULT NULL ,
   `description` VARCHAR(250) NULL DEFAULT NULL ,
   `icon` VARCHAR(50) NULL DEFAULT NULL ,
+  `conditions` VARCHAR(50) NULL DEFAULT NULL ,
   CONSTRAINT `PRIMARY` PRIMARY KEY (`ID`),
   CONSTRAINT `primary_index` UNIQUE (`ID`)
 );

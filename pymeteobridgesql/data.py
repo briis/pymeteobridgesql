@@ -42,6 +42,7 @@ class RealtimeData:
     elevation: int
     description: str
     icon: str
+    conditions: str
 
     @property
     def absolute_humidity(self) -> float:
