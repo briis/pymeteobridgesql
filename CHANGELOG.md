@@ -1,5 +1,12 @@
 # Release 1.1.2
 
+**Date**: `2024-02-13`
+
+## Changes
+
+- Added conditions to `realtime` table.
+
+
 **Date**: `2024-02-10`
 
 ## Changes
