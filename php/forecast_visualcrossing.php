@@ -136,6 +136,7 @@ function conditionState($icon) {
     if ($icon == "thunder-showers-night") { return "lightning-rainy";}
     if ($icon == "rain") { return "rainy";}
     if ($icon == "snow") { return "snowy";}
+    if ($icon == "wind") { return "windy";}
     return $icon;
 }
 
