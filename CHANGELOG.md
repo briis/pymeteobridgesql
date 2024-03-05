@@ -1,3 +1,12 @@
+# Release 1.1.4
+
+**Date**: `2024-03-06`
+
+## What Changed
+
+- Added missing icon for `snow-showers-day` and `snow-showers-night`.
+
+
 # Release 1.1.2
 
 **Date**: `2024-02-13`
