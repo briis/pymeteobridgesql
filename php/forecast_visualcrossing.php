@@ -130,10 +130,10 @@ function conditionState($icon) {
     if ($icon == "clear-day") { return "sunny";}
     if ($icon == "partly-cloudy-day") { return "partlycloudy";}
     if ($icon == "partly-cloudy-night") { return "partlycloudy";}
-    if ($icon == "showers-day") { return "snowy-rainy";}
-    if ($icon == "showers-night") { return "snowy-rainy";}
-    if ($icon == "snow-showers-day") { return "rainy";}
-    if ($icon == "snow-showers-night") { return "rainy";}
+    if ($icon == "showers-day") { return "rainy";}
+    if ($icon == "showers-night") { return "rainy";}
+    if ($icon == "snow-showers-day") { return "snowy-rainy";}
+    if ($icon == "snow-showers-night") { return "snowy-rainy";}
     if ($icon == "thunder-showers-day") { return "lightning-rainy";}
     if ($icon == "thunder-showers-night") { return "lightning-rainy";}
     if ($icon == "rain") { return "rainy";}
