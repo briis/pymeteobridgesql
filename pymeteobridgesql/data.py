@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-import dataclasses
+from dataclasses import dataclass
 import datetime
 import math
 
-@dataclasses.dataclass
+@dataclass(frozen=True)
 class RealtimeData:
     ID: str
     temperature: float
@@ -177,7 +177,7 @@ class RealtimeData:
         index = round(self.windbearing / 22.5) % 16
         return directions[index].lower()
 
-@dataclasses.dataclass
+@dataclass(frozen=True)
 class ForecastHourly:
     hour_num: int
     datetime: datetime.datetime
@@ -194,7 +194,7 @@ class ForecastHourly:
     wind_gust: float
     uv_index: float
 
-@dataclasses.dataclass
+@dataclass(frozen=True)
 class ForecastDaily:
     day_num: int
     datetime: datetime.datetime
@@ -209,7 +209,7 @@ class ForecastDaily:
     wind_speed: float
     wind_gust: float
 
-@dataclasses.dataclass
+@dataclass(frozen=True)
 class StationData:
     ID: str
     mb_ip: str
