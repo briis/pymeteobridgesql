@@ -177,6 +177,55 @@ class RealtimeData:
         index = round(self.windbearing / 22.5) % 16
         return directions[index].lower()
 
+    def to_dict(self):
+        return {
+            "ID": self.ID,
+            "temperature": self.temperature,
+            "tempmax": self.tempmax,
+            "tempmin": self.tempmin,
+            "windchill": self.windchill,
+            "pm1": self.pm1,
+            "pm25": self.pm25,
+            "pm10": self.pm10,
+            "heatindex": self.heatindex,
+            "temp15min": self.temp15min,
+            "humidity": self.humidity,
+            "windspeedavg": self.windspeedavg,
+            "windgust": self.windgust,
+            "dewpoint": self.dewpoint,
+            "rainrate": self.rainrate,
+            "raintoday": self.raintoday,
+            "rainyesterday": self.rainyesterday,
+            "windbearing": self.windbearing,
+            "beaufort": self.beaufort,
+            "sealevelpressure": self.sealevelpressure,
+            "uv": self.uv,
+            "uvdaymax": self.uvdaymax,
+            "solarrad": self.solarrad,
+            "solarraddaymax": self.solarraddaymax,
+            "pressuretrend": self.pressuretrend,
+            "mb_ip": self.mb_ip,
+            "mb_swversion": self.mb_swversion,
+            "mb_buildnum": self.mb_buildnum,
+            "mb_platform": self.mb_platform,
+            "mb_station": self.mb_station,
+            "mb_stationname": self.mb_stationname,
+            "elevation": self.elevation,
+            "description": self.description,
+            "icon": self.icon,
+            "conditions": self.conditions,
+            "absolute_humidity": self.absolute_humidity,
+            "aqi": self.aqi,
+            "beaufort_description": self.beaufort_description,
+            "cloud_base": self.cloud_base,
+            "feels_like_temperature": self.feels_like_temperature,
+            "freezing_altitude": self.freezing_altitude,
+            "pressuretrend_text": self.pressuretrend_text,
+            "uv_description": self.uv_description,
+            "visibility": self.visibility,
+            "wind_direction": self.wind_direction,
+        }
+
 @dataclass(frozen=True)
 class ForecastHourly:
     hour_num: int
