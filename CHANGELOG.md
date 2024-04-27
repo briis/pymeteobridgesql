@@ -1,3 +1,13 @@
+
+# Release 1.1.7
+
+**Date**: `2024-04-27`
+
+## What Changed
+
+- Added daily sunrise and sunset values to forecast
+- Added `to_json` function to alle data tables
+
 # Release 1.1.4
 
 **Date**: `2024-03-06`
