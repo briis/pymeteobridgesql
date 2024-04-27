@@ -48,6 +48,8 @@ CREATE TABLE `forecast_daily` (
   `precipitation_probability` INT NULL DEFAULT NULL ,
   `precipitation` FLOAT NULL DEFAULT NULL ,
   `pressure` FLOAT NULL DEFAULT NULL ,
+  `sunriseepoch` INT NULL DEFAULT NULL ,
+  `sunsetepoch` INT NULL DEFAULT NULL ,
   `wind_bearing` INT NULL DEFAULT NULL ,
   `wind_speed` FLOAT NULL DEFAULT NULL ,
   `wind_gust` FLOAT NULL DEFAULT NULL ,

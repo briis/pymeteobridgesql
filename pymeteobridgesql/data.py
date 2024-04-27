@@ -243,6 +243,24 @@ class ForecastHourly:
     wind_gust: float
     uv_index: float
 
+    def to_dict(self):
+        return {
+            "hour_num": self.hour_num,
+            "datetime": self.datetime,
+            "temperature": self.temperature,
+            "apparent_temperature": self.apparent_temperature,
+            "humidity": self.humidity,
+            "description": self.description,
+            "icon": self.icon,
+            "precipitation_probability": self.precipitation_probability,
+            "precipitation": self.precipitation,
+            "pressure": self.pressure,
+            "wind_bearing": self.wind_bearing,
+            "wind_speed": self.wind_speed,
+            "wind_gust": self.wind_gust,
+            "uv_index": self.uv_index,
+        }
+
 @dataclass(frozen=True)
 class ForecastDaily:
     day_num: int
@@ -254,9 +272,29 @@ class ForecastDaily:
     precipitation_probability: int
     precipitation: float
     pressure: float
+    sunriseepoch: int
+    sunsetepoch: int
     wind_bearing: int
     wind_speed: float
     wind_gust: float
+
+    def to_dict(self):
+        return {
+            "day_num": self.day_num,
+            "datetime": self.datetime,
+            "temperature": self.temperature,
+            "temp_low": self.temp_low,
+            "description": self.description,
+            "icon": self.icon,
+            "precipitation_probability": self.precipitation_probability,
+            "precipitation": self.precipitation,
+            "pressure": self.pressure,
+            "sunriseepoch": self.sunriseepoch,
+            "sunsetepoch": self.sunsetepoch,
+            "wind_bearing": self.wind_bearing,
+            "wind_speed": self.wind_speed,
+            "wind_gust": self.wind_gust,
+        }
 
 @dataclass(frozen=True)
 class StationData:
