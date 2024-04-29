@@ -306,6 +306,87 @@ class StationData:
     mb_station: str
     mb_stationname: str
 
+
+@dataclass(frozen=True)
+class MinuteData:
+    logdate: datetime.datetime
+    temperature: float
+    wind_chill: float
+    air_Quality_pm1: float
+    air_Quality_pm10: float
+    air_Quality_pm25: float
+    heat_index: float
+    humidity: int
+    dewpoint: float
+    rain_rate: float
+    rain_day: float
+    wind_speed: float
+    wind_gust: float
+    wind_bearing: int
+    pressure: float
+    pressure_trend: float
+    uv: float
+    solar_radiation: float
+
+    def to_dict(self):
+        return {
+            "logdate": self.logdate,
+            "temperature": self.temperature,
+            "wind_chill": self.wind_chill,
+            "air_Quality_pm1": self.air_Quality_pm1,
+            "air_Quality_pm10": self.air_Quality_pm10,
+            "air_Quality_pm25": self.air_Quality_pm25,
+            "heat_index": self.heat_index,
+            "humidity": self.humidity,
+            "dewpoint": self.dewpoint,
+            "rain_rate": self.rain_rate,
+            "rain_day": self.rain_day,
+            "wind_speed": self.wind_speed,
+            "wind_gust": self.wind_gust,
+            "wind_bearing": self.wind_bearing,
+            "pressure": self.pressure,
+            "pressure_trend": self.pressure_trend,
+            "uv": self.uv,
+            "solar_radiation": self.solar_radiation,
+        }
+
+@dataclass(frozen=True)
+class MonthlyData:
+    logdate: datetime.date
+    temperature_low: float
+    temperature_high: float
+    humidity_low: int
+    humidity_high: int
+    rain_total: float
+    wind_speed_max: float
+    wind_speed_avg: float
+    wind_direction_avg: int
+    uvindex_max: float
+    solar_radiation_max: float
+    pressure_low: float
+    pressure_high: float
+    air_quality_low: float
+    air_quality_high: float
+
+    def to_dict(self):
+        return {
+            "logdate": self.logdate,
+            "temperature_low": self.temperature_low,
+            "temperature_high": self.temperature_high,
+            "humidity_low": self.humidity_low,
+            "humidity_high": self.humidity_high,
+            "rain_total": self.rain_total,
+            "wind_speed_max": self.wind_speed_max,
+            "wind_speed_avg": self.wind_speed_avg,
+            "wind_direction_avg": self.wind_direction_avg,
+            "uvindex_max": self.uvindex_max,
+            "solar_radiation_max": self.solar_radiation_max,
+            "pressure_low": self.pressure_low,
+            "pressure_high": self.pressure_high,
+            "air_quality_low": self.air_quality_low,
+            "air_quality_high": self.air_quality_high,
+        }
+
 def aqi_from_pm25(pm25: float) -> int:
     """Calculate the Air Quality Index from the PM2.5 value."""
     if pm25 is None:
@@ -341,5 +422,4 @@ def calcAQI(pm25: float, ih: int, il: int, bph: int, bpl: int) -> float:
     _val2 = (bph - bpl)
     _val3 = (pm25 - bpl)
     return float(_val1 / _val2 * _val3 + il)
-
 
