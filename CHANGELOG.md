@@ -1,4 +1,13 @@
 
+# Release 1.2.0
+
+**Date**: `2024-04-29`
+
+## What Changed
+
+* Added dataclass for `MonthlyData` and `MinuteData`
+* Added Functions to retrieve data from the above two tables
+
 # Release 1.1.7
 
 **Date**: `2024-04-27`
