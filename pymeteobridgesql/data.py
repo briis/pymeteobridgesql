@@ -277,6 +277,7 @@ class ForecastDaily:
     wind_bearing: int
     wind_speed: float
     wind_gust: float
+    conditions: str
 
     def to_dict(self):
         return {
@@ -294,6 +295,7 @@ class ForecastDaily:
             "wind_bearing": self.wind_bearing,
             "wind_speed": self.wind_speed,
             "wind_gust": self.wind_gust,
+            "conditions": self.conditions,
         }
 
 @dataclass(frozen=True)
