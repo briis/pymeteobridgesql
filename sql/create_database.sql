@@ -53,6 +53,7 @@ CREATE TABLE `forecast_daily` (
   `wind_bearing` INT NULL DEFAULT NULL ,
   `wind_speed` FLOAT NULL DEFAULT NULL ,
   `wind_gust` FLOAT NULL DEFAULT NULL ,
+  `conditions` VARCHAR(50) NULL DEFAULT NULL ,
   CONSTRAINT `PRIMARY` PRIMARY KEY (`day_num`)
 );
 
