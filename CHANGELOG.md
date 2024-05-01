@@ -1,4 +1,12 @@
 
+# Release 1.2.1
+
+**Date**: `2024-05-01`
+
+## What Changed
+
+* Added `conditions` to Daily Forecast
+
 # Release 1.2.0
 
 **Date**: `2024-04-29`
