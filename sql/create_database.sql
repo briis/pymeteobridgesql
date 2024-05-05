@@ -72,6 +72,7 @@ CREATE TABLE `forecast_hourly` (
   `wind_speed` FLOAT NULL DEFAULT NULL ,
   `wind_gust` FLOAT NULL DEFAULT NULL ,
   `uv_index` FLOAT NULL DEFAULT NULL ,
+  `visibility` FLOAT NULL DEFAULT NULL ,
   CONSTRAINT `PRIMARY` PRIMARY KEY (`hour_num`)
 );
 
