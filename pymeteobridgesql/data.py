@@ -242,6 +242,7 @@ class ForecastHourly:
     wind_speed: float
     wind_gust: float
     uv_index: float
+    visibility: float
 
     def to_dict(self):
         return {
@@ -259,6 +260,7 @@ class ForecastHourly:
             "wind_speed": self.wind_speed,
             "wind_gust": self.wind_gust,
             "uv_index": self.uv_index,
+            "visibility": self.visibility,
         }
 
 @dataclass(frozen=True)
