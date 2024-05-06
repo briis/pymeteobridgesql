@@ -324,6 +324,7 @@ class MinuteData:
     dewpoint: float
     rain_rate: float
     rain_day: float
+    rain_hour: float
     wind_speed: float
     wind_gust: float
     wind_bearing: int
@@ -345,6 +346,7 @@ class MinuteData:
             "dewpoint": self.dewpoint,
             "rain_rate": self.rain_rate,
             "rain_day": self.rain_day,
+            "rain_hour": self.rain_hour,
             "wind_speed": self.wind_speed,
             "wind_gust": self.wind_gust,
             "wind_bearing": self.wind_bearing,

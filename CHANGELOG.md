@@ -1,4 +1,12 @@
 
+# Release 1.2.3
+
+**Date**: `2024-05-06`
+
+## What Changed
+
+* Added `rain_hour` to Minute Data
+
 # Release 1.2.2
 
 **Date**: `2024-05-05`
