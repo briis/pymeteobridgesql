@@ -1,4 +1,13 @@
 
+# Release 1.2.4
+
+**Date**: `2024-05-13`
+
+## What Changed
+
+* Added `visibility` to Minute Data
+
+
 # Release 1.2.3
 
 **Date**: `2024-05-06`

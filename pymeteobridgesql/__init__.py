@@ -7,6 +7,6 @@ from .api import MeteobridgeSQL, MeteobridgeSQLDatabaseConnectionError, Meteobri
 from .data import ForecastDaily, ForecastHourly, MinuteData, MonthlyData, RealtimeData, StationData
 
 __title__ = "pymeteobridgesql"
-__version__ = "1.2.3"
+__version__ = "1.2.4"
 __author__ = "briis"
 __license__ = "MIT"

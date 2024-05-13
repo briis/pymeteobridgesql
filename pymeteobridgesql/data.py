@@ -332,6 +332,7 @@ class MinuteData:
     pressure_trend: float
     uv: float
     solar_radiation: float
+    visibility: float
 
     def to_dict(self):
         return {
@@ -354,6 +355,7 @@ class MinuteData:
             "pressure_trend": self.pressure_trend,
             "uv": self.uv,
             "solar_radiation": self.solar_radiation,
+            "visibility": self.visibility,
         }
 
 @dataclass(frozen=True)
