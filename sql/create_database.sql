@@ -1,42 +1,45 @@
+DROP TABLE IF EXISTS `realtime_data`;
 CREATE TABLE `realtime_data` (
   `ID` VARCHAR(20) NOT NULL,
-  `temperature` FLOAT NULL DEFAULT NULL ,
-  `tempmax` FLOAT NULL DEFAULT NULL ,
-  `tempmin` FLOAT NULL DEFAULT NULL ,
-  `windchill` FLOAT NULL DEFAULT NULL ,
-  `pm1` FLOAT NULL DEFAULT NULL ,
-  `pm25` FLOAT NULL DEFAULT NULL ,
-  `pm10` FLOAT NULL DEFAULT NULL ,
-  `heatindex` FLOAT NULL DEFAULT NULL ,
-  `temp15min` FLOAT NULL DEFAULT NULL ,
-  `humidity` INT NULL DEFAULT NULL ,
-  `windspeedavg` FLOAT NULL DEFAULT NULL ,
-  `windgust` FLOAT NULL DEFAULT NULL ,
-  `dewpoint` FLOAT NULL DEFAULT NULL ,
-  `rainrate` FLOAT NULL DEFAULT NULL ,
-  `raintoday` FLOAT NULL DEFAULT NULL ,
-  `rainyesterday` FLOAT NULL DEFAULT NULL ,
-  `windbearing` INT NULL DEFAULT NULL ,
-  `beaufort` INT NULL DEFAULT NULL ,
-  `sealevelpressure` FLOAT NULL DEFAULT NULL ,
-  `uv` FLOAT NULL DEFAULT NULL ,
-  `uvdaymax` FLOAT NULL DEFAULT NULL ,
-  `solarrad` FLOAT NULL DEFAULT NULL ,
-  `solarraddaymax` FLOAT NULL DEFAULT NULL ,
-  `pressuretrend` FLOAT NULL DEFAULT NULL ,
-  `mb_ip` VARCHAR(20) NULL DEFAULT NULL ,
-  `mb_swversion` VARCHAR(20) NULL DEFAULT NULL ,
-  `mb_buildnum` VARCHAR(10) NULL DEFAULT NULL ,
-  `mb_platform` VARCHAR(20) NULL DEFAULT NULL ,
-  `mb_station` VARCHAR(20) NULL DEFAULT NULL ,
-  `mb_stationname` VARCHAR(50) NULL DEFAULT NULL ,
-  `elevation` INT NULL DEFAULT NULL ,
-  `description` VARCHAR(250) NULL DEFAULT NULL ,
-  `icon` VARCHAR(50) NULL DEFAULT NULL ,
-  `conditions` VARCHAR(50) NULL DEFAULT NULL ,
+  `temperature` FLOAT NULL DEFAULT 'NULL' ,
+  `tempmax` FLOAT NULL DEFAULT 'NULL' ,
+  `tempmin` FLOAT NULL DEFAULT 'NULL' ,
+  `windchill` FLOAT NULL DEFAULT 'NULL' ,
+  `pm1` FLOAT NULL DEFAULT 'NULL' ,
+  `pm25` FLOAT NULL DEFAULT 'NULL' ,
+  `pm10` FLOAT NULL DEFAULT 'NULL' ,
+  `heatindex` FLOAT NULL DEFAULT 'NULL' ,
+  `temp15min` FLOAT NULL DEFAULT 'NULL' ,
+  `humidity` INT NULL DEFAULT 'NULL' ,
+  `windspeedavg` FLOAT NULL DEFAULT 'NULL' ,
+  `windgust` FLOAT NULL DEFAULT 'NULL' ,
+  `dewpoint` FLOAT NULL DEFAULT 'NULL' ,
+  `rainrate` FLOAT NULL DEFAULT 'NULL' ,
+  `raintoday` FLOAT NULL DEFAULT 'NULL' ,
+  `rainyesterday` FLOAT NULL DEFAULT 'NULL' ,
+  `windbearing` INT NULL DEFAULT 'NULL' ,
+  `beaufort` INT NULL DEFAULT 'NULL' ,
+  `sealevelpressure` FLOAT NULL DEFAULT 'NULL' ,
+  `uv` FLOAT NULL DEFAULT 'NULL' ,
+  `uvdaymax` FLOAT NULL DEFAULT 'NULL' ,
+  `solarrad` FLOAT NULL DEFAULT 'NULL' ,
+  `solarraddaymax` FLOAT NULL DEFAULT 'NULL' ,
+  `pressuretrend` FLOAT NULL DEFAULT 'NULL' ,
+  `mb_ip` VARCHAR(20) NULL DEFAULT 'NULL' ,
+  `mb_swversion` VARCHAR(20) NULL DEFAULT 'NULL' ,
+  `mb_buildnum` VARCHAR(10) NULL DEFAULT 'NULL' ,
+  `mb_platform` VARCHAR(20) NULL DEFAULT 'NULL' ,
+  `mb_station` VARCHAR(20) NULL DEFAULT 'NULL' ,
+  `mb_stationname` VARCHAR(50) NULL DEFAULT 'NULL' ,
+  `elevation` INT NULL DEFAULT 'NULL' ,
+  `description` VARCHAR(250) NULL DEFAULT 'NULL' ,
+  `icon` VARCHAR(50) NULL DEFAULT 'NULL' ,
+  `conditions` VARCHAR(50) NULL DEFAULT 'NULL' ,
   CONSTRAINT `PRIMARY` PRIMARY KEY (`ID`),
   CONSTRAINT `primary_index` UNIQUE (`ID`)
 );
+
+
 DROP TABLE IF EXISTS `forecast_daily`;
 CREATE TABLE `forecast_daily` (
   `day_num` INT NOT NULL,
@@ -57,6 +60,7 @@ CREATE TABLE `forecast_daily` (
   CONSTRAINT `PRIMARY` PRIMARY KEY (`day_num`)
 );
 
+DROP TABLE IF EXISTS `forecast_hourly`;
 CREATE TABLE `forecast_hourly` (
   `hour_num` INT NOT NULL,
   `datetime` DATETIME NULL DEFAULT NULL ,
@@ -74,6 +78,71 @@ CREATE TABLE `forecast_hourly` (
   `uv_index` FLOAT NULL DEFAULT NULL ,
   `visibility` FLOAT NULL DEFAULT NULL ,
   CONSTRAINT `PRIMARY` PRIMARY KEY (`hour_num`)
+);
+
+DROP TABLE IF EXISTS `daily_data`;
+CREATE TABLE `daily_data` (
+  `logdate` DATE NOT NULL,
+  `temperature_low` FLOAT NULL DEFAULT 'NULL' ,
+  `temperature_high` FLOAT NULL DEFAULT 'NULL' ,
+  `humidity_low` INT NULL DEFAULT 'NULL' ,
+  `humidity_high` INT NULL DEFAULT 'NULL' ,
+  `rain_total` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_speed_max` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_speed_avg` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_direction_avg` INT NULL DEFAULT 'NULL' ,
+  `uvindex_max` FLOAT NULL DEFAULT 'NULL' ,
+  `solar_radiation_max` FLOAT NULL DEFAULT 'NULL' ,
+  `pressure_low` FLOAT NULL DEFAULT 'NULL' ,
+  `pressure_high` FLOAT NULL DEFAULT 'NULL' ,
+  `air_quality_low` FLOAT NULL DEFAULT 'NULL' ,
+  `air_quality_high` FLOAT NULL DEFAULT 'NULL' ,
+  CONSTRAINT `PRIMARY` PRIMARY KEY (`logdate`)
+);
+
+DROP TABLE IF EXISTS `minute_data`;
+CREATE TABLE `minute_data` (
+  `logdate` DATETIME NOT NULL,
+  `temperature` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_chill` FLOAT NULL DEFAULT 'NULL' ,
+  `air_Quality_pm1` FLOAT NULL DEFAULT 'NULL' ,
+  `air_Quality_pm10` FLOAT NULL DEFAULT 'NULL' ,
+  `air_Quality_pm25` FLOAT NULL DEFAULT 'NULL' ,
+  `heat_index` FLOAT NULL DEFAULT 'NULL' ,
+  `humidity` INT NULL DEFAULT 'NULL' ,
+  `dewpoint` FLOAT NULL DEFAULT 'NULL' ,
+  `rain_rate` FLOAT NULL DEFAULT 'NULL' ,
+  `rain_day` FLOAT NULL DEFAULT 'NULL' ,
+  `rain_hour` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_speed` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_gust` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_bearing` INT NULL DEFAULT 'NULL' ,
+  `pressure` FLOAT NULL DEFAULT 'NULL' ,
+  `pressure_trend` FLOAT NULL DEFAULT 'NULL' ,
+  `uv` FLOAT NULL DEFAULT 'NULL' ,
+  `solar_radiation` FLOAT NULL DEFAULT 'NULL' ,
+  CONSTRAINT `PRIMARY` PRIMARY KEY (`logdate`),
+  CONSTRAINT `date_index` UNIQUE (`logdate`)
+);
+
+DROP TABLE IF EXISTS `monthly_data`;
+CREATE TABLE `monthly_data` (
+  `logdate` DATE NOT NULL,
+  `temperature_low` FLOAT NULL DEFAULT 'NULL' ,
+  `temperature_high` FLOAT NULL DEFAULT 'NULL' ,
+  `humidity_low` INT NULL DEFAULT 'NULL' ,
+  `humidity_high` INT NULL DEFAULT 'NULL' ,
+  `rain_total` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_speed_max` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_speed_avg` FLOAT NULL DEFAULT 'NULL' ,
+  `wind_direction_avg` INT NULL DEFAULT 'NULL' ,
+  `uvindex_max` FLOAT NULL DEFAULT 'NULL' ,
+  `solar_radiation_max` FLOAT NULL DEFAULT 'NULL' ,
+  `pressure_low` FLOAT NULL DEFAULT 'NULL' ,
+  `pressure_high` FLOAT NULL DEFAULT 'NULL' ,
+  `air_quality_low` FLOAT NULL DEFAULT 'NULL' ,
+  `air_quality_high` FLOAT NULL DEFAULT 'NULL' ,
+  CONSTRAINT `PRIMARY` PRIMARY KEY (`logdate`)
 );
 
 -- Once the empty table has been created you need to insert a row, that then later can be updated from the Meteobridge device
@@ -96,3 +165,32 @@ ON DUPLICATE KEY UPDATE
 `wind_bearing` = wind_bearing_value,
 `wind_speed` = wind_speed_value,
 `wind_gust` = wind_gust_value;
+
+CREATE FUNCTION `calcVisibility`()
+RETURNS float DETERMINISTIC
+BEGIN
+	DECLARE visibility FLOAT;
+    DECLARE elevation_min FLOAT;
+    DECLARE max_visibility FLOAT;
+    DECLARE percent_reduction FLOAT;
+    DECLARE percent_reduction_a FLOAT;
+
+    IF elevation > 2 THEN
+    	SET elevation_min = elevation;
+    ELSE
+    	SET elevation_min = 2;
+    END IF;
+    SET max_visibility = 3.56972 * SQRT(elevation_min);
+    SET percent_reduction_a = (1.13 * ABS(temperature - dewpoint) - 1.15) / 10;
+    IF percent_reduction_a > 1 THEN
+    	SET percent_reduction = 1;
+    ELSEIF percent_reduction_a < 0.025 THEN
+    	SET percent_reduction = 0.025;
+    ELSE
+    	SET percent_reduction = percent_reduction_a;
+    END IF;
+
+    RETURN max_visibility * percent_reduction;
+END;
+
+CREATE VIEW `viewMinuteData` AS select `weather_history`.`minute_data`.`logdate` AS `logdate`,`weather_history`.`minute_data`.`temperature` AS `temperature`,`weather_history`.`minute_data`.`wind_chill` AS `wind_chill`,`weather_history`.`minute_data`.`air_Quality_pm1` AS `air_Quality_pm1`,`weather_history`.`minute_data`.`air_Quality_pm10` AS `air_Quality_pm10`,`weather_history`.`minute_data`.`air_Quality_pm25` AS `air_Quality_pm25`,`weather_history`.`minute_data`.`heat_index` AS `heat_index`,`weather_history`.`minute_data`.`humidity` AS `humidity`,`weather_history`.`minute_data`.`dewpoint` AS `dewpoint`,`weather_history`.`minute_data`.`rain_rate` AS `rain_rate`,`weather_history`.`minute_data`.`rain_day` AS `rain_day`,`weather_history`.`minute_data`.`rain_hour` AS `rain_hour`,`weather_history`.`minute_data`.`wind_speed` AS `wind_speed`,`weather_history`.`minute_data`.`wind_gust` AS `wind_gust`,`weather_history`.`minute_data`.`wind_bearing` AS `wind_bearing`,`weather_history`.`minute_data`.`pressure` AS `pressure`,`weather_history`.`minute_data`.`pressure_trend` AS `pressure_trend`,`weather_history`.`minute_data`.`uv` AS `uv`,`weather_history`.`minute_data`.`solar_radiation` AS `solar_radiation`,`calcVisibility`(53,`weather_history`.`minute_data`.`temperature`,`weather_history`.`minute_data`.`dewpoint`) AS `visibility` from `weather_history`.`minute_data`;
