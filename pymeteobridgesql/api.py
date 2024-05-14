@@ -120,7 +120,7 @@ class MeteobridgeSQL:
         result_array = []
         try:
             self._weather_cursor.execute(
-                f"SELECT * FROM minute_data WHERE `logdate` > NOW() - INTERVAL {interval} HOUR;"
+                f"SELECT * FROM viewMinuteData WHERE `logdate` > NOW() - INTERVAL {interval} HOUR;"
             )
             result = self._weather_cursor.fetchall()
             for row in result:
