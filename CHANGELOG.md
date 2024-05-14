@@ -1,5 +1,15 @@
 
+# Release 1.2.5
+
+**Date**: `2024-05-14`
+
+## What Changed
+
+* Now retrieving `minute_data` from View instead of Table to be able to get calculated fields
+
+
 # Release 1.2.4
+
 
 **Date**: `2024-05-13`
 
