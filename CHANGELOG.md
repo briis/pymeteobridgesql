@@ -5,7 +5,7 @@
 
 ## What Changed
 
-* Added function to get data from `data_data` using a view to get calculated values also.
+* Added function to get data from `daily_data` using a view to get calculated values also.
 
 
 # Release 1.2.5
