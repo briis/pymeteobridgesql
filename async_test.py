@@ -96,13 +96,13 @@ async def main() -> None:
     #     print(err)
 
     try:
-        result = await weather.async_get_minute_data('12')
+        result = await weather.async_get_daily_data('6')
         for row in result:
             print("")
             print("========================================================")
             print("DATE: ", row.logdate)
-            print("TEMP: ", row.temperature)
-            print("ICON: ", row.wind_speed)
+            print("TEMP: ", row.temperature_high)
+            print("WIND MAX: ", row.wind_speed_max)
             print("")
 
     except Exception as err:
