@@ -358,6 +358,52 @@ class MinuteData:
             "visibility": self.visibility,
         }
 
+
+@dataclass(frozen=True)
+class DailyData:
+    logdate: datetime.date
+    temperature_low: float
+    temperature_high: float
+    humidity_low: int
+    humidity_high: int
+    rain_total: float
+    wind_speed_max: float
+    wind_speed_avg: float
+    wind_direction_avg: int
+    uvindex_max: float
+    solar_radiation_max: float
+    pressure_low: float
+    pressure_high: float
+    air_quality_low: float
+    air_quality_high: float
+    dewpoint_low: float
+    dewpoint_high: float
+    visibility_low: float
+    visibility_high: float
+
+    def to_dict(self):
+        return {
+            "logdate": self.logdate,
+            "temperature_low": self.temperature_low,
+            "temperature_high": self.temperature_high,
+            "humidity_low": self.humidity_low,
+            "humidity_high": self.humidity_high,
+            "rain_total": self.rain_total,
+            "wind_speed_max": self.wind_speed_max,
+            "wind_speed_avg": self.wind_speed_avg,
+            "wind_direction_avg": self.wind_direction_avg,
+            "uvindex_max": self.uvindex_max,
+            "solar_radiation_max": self.solar_radiation_max,
+            "pressure_low": self.pressure_low,
+            "pressure_high": self.pressure_high,
+            "air_quality_low": self.air_quality_low,
+            "air_quality_high": self.air_quality_high,
+            "dewpoint_low": self.dewpoint_low,
+            "dewpoint_high": self.dewpoint_high,
+            "visibility_low": self.visibility_low,
+            "visibility_high": self.visibility_high,
+        }
+
 @dataclass(frozen=True)
 class MonthlyData:
     logdate: datetime.date

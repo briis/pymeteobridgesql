@@ -97,6 +97,8 @@ CREATE TABLE `daily_data` (
   `pressure_high` FLOAT NULL DEFAULT 'NULL' ,
   `air_quality_low` FLOAT NULL DEFAULT 'NULL' ,
   `air_quality_high` FLOAT NULL DEFAULT 'NULL' ,
+  `dewpoint_low` FLOAT NULL DEFAULT 'NULL' ,
+  `dewpoint_high` FLOAT NULL DEFAULT 'NULL' ,
   CONSTRAINT `PRIMARY` PRIMARY KEY (`logdate`)
 );
 
@@ -194,3 +196,27 @@ BEGIN
 END;
 
 CREATE VIEW `viewMinuteData` AS select `weather_history`.`minute_data`.`logdate` AS `logdate`,`weather_history`.`minute_data`.`temperature` AS `temperature`,`weather_history`.`minute_data`.`wind_chill` AS `wind_chill`,`weather_history`.`minute_data`.`air_Quality_pm1` AS `air_Quality_pm1`,`weather_history`.`minute_data`.`air_Quality_pm10` AS `air_Quality_pm10`,`weather_history`.`minute_data`.`air_Quality_pm25` AS `air_Quality_pm25`,`weather_history`.`minute_data`.`heat_index` AS `heat_index`,`weather_history`.`minute_data`.`humidity` AS `humidity`,`weather_history`.`minute_data`.`dewpoint` AS `dewpoint`,`weather_history`.`minute_data`.`rain_rate` AS `rain_rate`,`weather_history`.`minute_data`.`rain_day` AS `rain_day`,`weather_history`.`minute_data`.`rain_hour` AS `rain_hour`,`weather_history`.`minute_data`.`wind_speed` AS `wind_speed`,`weather_history`.`minute_data`.`wind_gust` AS `wind_gust`,`weather_history`.`minute_data`.`wind_bearing` AS `wind_bearing`,`weather_history`.`minute_data`.`pressure` AS `pressure`,`weather_history`.`minute_data`.`pressure_trend` AS `pressure_trend`,`weather_history`.`minute_data`.`uv` AS `uv`,`weather_history`.`minute_data`.`solar_radiation` AS `solar_radiation`,`calcVisibility`(53,`weather_history`.`minute_data`.`temperature`,`weather_history`.`minute_data`.`dewpoint`) AS `visibility` from `weather_history`.`minute_data`;
+
+CREATE VIEW `viewDailyData` AS
+SELECT
+  `logdate`,
+  `temperature_low`,
+  `temperature_high`,
+  `humidity_low`,
+  `humidity_high`,
+  `rain_total`,
+  `wind_speed_max`,
+  `wind_speed_avg`,
+  `wind_direction_avg`,
+  `uvindex_max`,
+  `solar_radiation_max`,
+  `pressure_low`,
+  `pressure_high`,
+  `air_quality_low`,
+  `air_quality_high`,
+  `dewpoint_low`,
+  `dewpoint_high`,
+  `calcVisibility`(53,`weather_history`.`daily_data`.`temperature_low`,`weather_history`.`daily_data`.`dewpoint_low`) AS `visibility_low`,
+  `calcVisibility`(53,`weather_history`.`daily_data`.`temperature_high`,`weather_history`.`daily_data`.`dewpoint_high`) AS `visibility_high`
+FROM
+  `daily_data`;

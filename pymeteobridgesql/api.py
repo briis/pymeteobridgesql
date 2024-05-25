@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 import mysql.connector
 
-from .data import ForecastDaily, ForecastHourly, MinuteData, MonthlyData, RealtimeData, StationData
+from .data import ForecastDaily, ForecastHourly, MinuteData, DailyData, MonthlyData, RealtimeData, StationData
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -127,6 +127,22 @@ class MeteobridgeSQL:
                 result_array.append(MinuteData(*row))
         except mysql.connector.Error as err:
             raise MeteobridgeSQLDataError(f"Failed to lookup data from the minute_data table in the database: {err.msg}")
+
+        return result_array
+
+    async def async_get_daily_data(self, interval: str = '31') -> any:
+        """Get data from the Daily Data table."""
+
+        result_array = []
+        try:
+            self._weather_cursor.execute(
+                f"SELECT * FROM viewDailyData WHERE `logdate` > NOW() - INTERVAL {interval} DAY;"
+            )
+            result = self._weather_cursor.fetchall()
+            for row in result:
+                result_array.append(DailyData(*row))
+        except mysql.connector.Error as err:
+            raise MeteobridgeSQLDataError(f"Failed to lookup data from the daily_data table in the database: {err.msg}")
 
         return result_array
 
