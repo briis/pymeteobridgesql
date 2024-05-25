@@ -1,4 +1,13 @@
 
+# Release 1.3.0
+
+**Date**: `2024-05-25`
+
+## What Changed
+
+* Added function to get data from `data_data` using a view to get calculated values also.
+
+
 # Release 1.2.5
 
 **Date**: `2024-05-14`
