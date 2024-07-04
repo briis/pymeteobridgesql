@@ -230,3 +230,8 @@ DROP TRIGGER IF EXISTS `before_insert_daily_data`;
 CREATE TRIGGER `before_insert_daily_data` BEFORE INSERT ON `daily_data`
 FOR EACH ROW
 SET NEW.uvindex_max = (SELECT `uvdaymax` FROM `realtime_data` WHERE `ID` = '94:A4:08:E8:B0:41'), NEW.solar_radiation_max = (SELECT `solarraddaymax` FROM `realtime_data` WHERE `ID` = '94:A4:08:E8:B0:41');
+
+DROP TRIGGER IF EXISTS `before_update_daily_data`;
+CREATE TRIGGER `before_update_daily_data` BEFORE UPDATE ON `daily_data`
+FOR EACH ROW
+SET NEW.uvindex_max = (SELECT `uvdaymax` FROM `realtime_data` WHERE `ID` = '94:A4:08:E8:B0:41'), NEW.solar_radiation_max = (SELECT `solarraddaymax` FROM `realtime_data` WHERE `ID` = '94:A4:08:E8:B0:41');
