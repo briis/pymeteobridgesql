@@ -220,3 +220,13 @@ SELECT
   `calcVisibility`(53,`weather_history`.`daily_data`.`temperature_high`,`weather_history`.`daily_data`.`dewpoint_high`) AS `visibility_high`
 FROM
   `daily_data`;
+
+DROP TRIGGER IF EXISTS `before_insert_minute_data`;
+CREATE TRIGGER `before_insert_minute_data` BEFORE INSERT ON `minute_data`
+FOR EACH ROW
+SET NEW.uv = (SELECT `uv` FROM `realtime_data` WHERE `ID` = '94:A4:08:E8:B0:41'), NEW.solar_radiation = (SELECT `solarrad` FROM `realtime_data` WHERE `ID` = '94:A4:08:E8:B0:41');
+
+DROP TRIGGER IF EXISTS `before_insert_daily_data`;
+CREATE TRIGGER `before_insert_daily_data` BEFORE INSERT ON `daily_data`
+FOR EACH ROW
+SET NEW.uvindex_max = (SELECT `uvdaymax` FROM `realtime_data` WHERE `ID` = '94:A4:08:E8:B0:41'), NEW.solar_radiation_max = (SELECT `solarraddaymax` FROM `realtime_data` WHERE `ID` = '94:A4:08:E8:B0:41');
