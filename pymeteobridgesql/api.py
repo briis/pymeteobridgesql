@@ -72,7 +72,7 @@ class MeteobridgeSQL:
 
         return RealtimeData(*result)
 
-    async def async_get_station_data(self, id: str) -> RealtimeData:
+    async def async_get_station_data(self, id: str) -> StationData:
         """Get station data from the database."""
 
         try:
