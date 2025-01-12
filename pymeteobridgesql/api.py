@@ -37,6 +37,21 @@ class MeteobridgeSQL:
         self._weatherdb = None
         self._weather_cursor = None
 
+    def initialize(self) -> None:
+        """Initialize the connection."""
+        try:
+            self._weatherdb = mysql.connector.connect(
+                host=self._host,
+                user=self._user,
+                password=self._password,
+                database=self._database,
+                port=self._port,
+            )
+        except mysql.connector.Error as err:
+            raise MeteobridgeSQLDatabaseConnectionError(f"Failed to connect to the database: {err.msg}")
+
+        self._weather_cursor = self._weatherdb.cursor()
+
     async def async_init(self) -> None:
         """Initialize the connection."""
         try:
