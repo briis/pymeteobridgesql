@@ -1,4 +1,12 @@
 
+# Release 1.3.2
+
+**Date**: `2025-01-12`
+
+## What Changed
+
+* If PM2.5 is 0, we should return 0 as AQI and None
+
 # Release 1.3.1
 
 **Date**: `2025-01-12`
