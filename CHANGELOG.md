@@ -1,4 +1,12 @@
 
+# Release 1.3.3
+
+**Date**: `2025-01-12`
+
+## What Changed
+
+* Added Non Async Initialize Method to fix Blocking Errorsin Home Assistant 2025.1
+
 # Release 1.3.2
 
 **Date**: `2025-01-12`
