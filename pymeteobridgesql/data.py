@@ -465,7 +465,7 @@ def aqi_from_pm25(pm25: float) -> int:
         return calcAQI(pm25, 100, 51, 35.4, 12.1)
     if pm25 > 0:
         return calcAQI(pm25, 50, 0, 12, 0)
-    return None
+    return 0
 
 def calcAQI(pm25: float, ih: int, il: int, bph: int, bpl: int) -> float:
     """Calculate the Air Quality Index from the PM2.5 value."""
