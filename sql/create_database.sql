@@ -18,6 +18,8 @@ CREATE TABLE `realtime_data` (
   `raintoday` FLOAT NULL DEFAULT 'NULL' ,
   `rainyesterday` FLOAT NULL DEFAULT 'NULL' ,
   `windbearing` INT NULL DEFAULT 'NULL' ,
+  `windbearingavg10` INT NULL DEFAULT 'NULL' ,
+  `windbearingdavg` INT NULL DEFAULT 'NULL' ,
   `beaufort` INT NULL DEFAULT 'NULL' ,
   `sealevelpressure` FLOAT NULL DEFAULT 'NULL' ,
   `uv` FLOAT NULL DEFAULT 'NULL' ,

@@ -1,4 +1,16 @@
 
+# Release 1.4.0
+
+**Date**: `2025-02-23`
+
+## What Changed
+
+* Added two new fields to the realtime table. `windbearingavg10` and `windbearingdavg`. The two fields represent the last 10 minute average wind bearing and the daily average wind bearing. This is a breaking change as these fields need to be manually created in the table as follows:
+
+  `windbearingavg10` INT NULL DEFAULT 'NULL' ,
+  `windbearingdavg` INT NULL DEFAULT 'NULL' ,
+
+
 # Release 1.3.3
 
 **Date**: `2025-01-12`
