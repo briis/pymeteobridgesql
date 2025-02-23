@@ -30,26 +30,28 @@ async def main() -> None:
     weather = MeteobridgeSQL(_host, _user, _password, _database)
     await weather.async_init()
 
-    # try:
-    #     result = await weather.async_get_realtime_data(_id)
-    #     print("")
-    #     print("========================================================")
-    #     print("ID: ", result.ID)
-    #     print("ABSOLUTE HUMIDITY: ", result.absolute_humidity)
-    #     print("FEELS LIKE: ", result.feels_like_temperature)
-    #     print("FREEZING ALTITUDE: ", result.freezing_altitude)
-    #     print("PM2.5: ", result.pm25)
-    #     print("AIR QUALITY: ", result.aqi)
-    #     print("TEMPERATURE: ", result.temperature)
-    #     print("RAIN TODAY: ", result.raintoday)
-    #     print("VISIBILITY: ", result.visibility)
-    #     print("WIND BEARING: ", result.windbearing)
-    #     print("WIND DIRECTION: ", result.wind_direction)
-    #     print("WIND GUST: ", result.windgust)
-    #     print("")
+    try:
+        result = await weather.async_get_realtime_data(_id)
+        print("")
+        print("========================================================")
+        print("ID: ", result.ID)
+        print("ABSOLUTE HUMIDITY: ", result.absolute_humidity)
+        print("FEELS LIKE: ", result.feels_like_temperature)
+        print("FREEZING ALTITUDE: ", result.freezing_altitude)
+        print("PM2.5: ", result.pm25)
+        print("AIR QUALITY: ", result.aqi)
+        print("TEMPERATURE: ", result.temperature)
+        print("RAIN TODAY: ", result.raintoday)
+        print("VISIBILITY: ", result.visibility)
+        print("WIND BEARING: ", result.windbearing)
+        print("WIND BEARING 10 MIN AVG: ", result.windbearingavg10)
+        print("WIND BEARING DAY AVG: ", result.windbearingdavg)
+        print("WIND DIRECTION: ", result.wind_direction)
+        print("WIND GUST: ", result.windgust)
+        print("")
 
-    # except Exception as err:
-    #     print(err)
+    except Exception as err:
+        print(err)
 
     # try:
     #     result = await weather.async_get_station_data(_id)
@@ -95,18 +97,18 @@ async def main() -> None:
     # except Exception as err:
     #     print(err)
 
-    try:
-        result = await weather.async_get_daily_data('6')
-        for row in result:
-            print("")
-            print("========================================================")
-            print("DATE: ", row.logdate)
-            print("TEMP: ", row.temperature_high)
-            print("WIND MAX: ", row.wind_speed_max)
-            print("")
+    # try:
+    #     result = await weather.async_get_daily_data('6')
+    #     for row in result:
+    #         print("")
+    #         print("========================================================")
+    #         print("DATE: ", row.logdate)
+    #         print("TEMP: ", row.temperature_high)
+    #         print("WIND MAX: ", row.wind_speed_max)
+    #         print("")
 
-    except Exception as err:
-        print(err)
+    # except Exception as err:
+    #     print(err)
 
     await weather.async_disconnect()
 

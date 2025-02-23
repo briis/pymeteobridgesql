@@ -26,6 +26,8 @@ class RealtimeData:
     raintoday: float
     rainyesterday: float
     windbearing: int
+    windbearingavg10: int
+    windbearingdavg: int
     beaufort: int
     sealevelpressure: float
     uv: float
