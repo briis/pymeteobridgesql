@@ -53,21 +53,21 @@ async def main() -> None:
     except Exception as err:
         print(err)
 
-    # try:
-    #     result = await weather.async_get_station_data(_id)
-    #     print("")
-    #     print("========================================================")
-    #     print("ID: ", result.ID)
-    #     print("IP: ", result.mb_ip)
-    #     print("SW Version: ", result.mb_swversion)
-    #     print("BUILD NUM: ", result.mb_buildnum)
-    #     print("PLATFORM: ", result.mb_platform)
-    #     print("STATION: ", result.mb_station)
-    #     print("STATION NAME: ", result.mb_stationname)
-    #     print("")
+    try:
+        result = await weather.async_get_station_data(_id)
+        print("")
+        print("========================================================")
+        print("ID: ", result.ID)
+        print("IP: ", result.mb_ip)
+        print("SW Version: ", result.mb_swversion)
+        print("BUILD NUM: ", result.mb_buildnum)
+        print("PLATFORM: ", result.mb_platform)
+        print("STATION: ", result.mb_station)
+        print("STATION NAME: ", result.mb_stationname)
+        print("")
 
-    # except Exception as err:
-    #     print(err)
+    except Exception as err:
+        print(err)
 
 
     # try:
