@@ -31,6 +31,22 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 $resp = curl_exec($curl);
 curl_close($curl);
 
+// *****************************************
+// Save result to File forecast_visual.json
+// *****************************************
+$filePath = __DIR__ . '/forecast_visual.json';
+$decoded = json_decode($resp, true);
+
+if (json_last_error() === JSON_ERROR_NONE) {
+    $pretty = json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    if (file_put_contents($filePath, $pretty . PHP_EOL, LOCK_EX) === false) {
+        error_log("Could not write to $filePath");
+    }
+} else {
+    // Fallback: Save raw result of corrupt
+    file_put_contents($filePath, $resp, LOCK_EX);
+}
+
 // ***************************************
 // Insert Data into MySQL Database
 // ***************************************
