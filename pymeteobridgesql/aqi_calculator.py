@@ -14,8 +14,6 @@ Usage:
 """
 
 from dataclasses import dataclass
-from typing import Optional
-
 
 # ---------------------------------------------------------------------------
 # Breakpoint tables: (C_low, C_high, AQI_low, AQI_high)
@@ -23,45 +21,46 @@ from typing import Optional
 # ---------------------------------------------------------------------------
 
 _PM25_BREAKPOINTS = [
-    (0.0,   9.0,   0,   50),
-    (9.1,  35.4,  51,  100),
-    (35.5, 55.4, 101,  150),
+    (0.0, 9.0, 0, 50),
+    (9.1, 35.4, 51, 100),
+    (35.5, 55.4, 101, 150),
     (55.5, 125.4, 151, 200),
     (125.5, 225.4, 201, 300),
     (225.5, 325.4, 301, 500),
 ]
 
 _PM10_BREAKPOINTS = [
-    (0,    54,   0,   50),
-    (55,  154,  51,  100),
-    (155, 254, 101,  150),
-    (255, 354, 151,  200),
-    (355, 424, 201,  300),
-    (425, 604, 301,  500),
+    (0, 54, 0, 50),
+    (55, 154, 51, 100),
+    (155, 254, 101, 150),
+    (255, 354, 151, 200),
+    (355, 424, 201, 300),
+    (425, 604, 301, 500),
 ]
 
 AQI_CATEGORIES = [
-    (0,   50,  "Good",                          "#00E400"),
-    (51,  100, "Moderate",                      "#FFFF00"),
-    (101, 150, "Unhealthy for Sensitive Groups","#FF7E00"),
-    (151, 200, "Unhealthy",                     "#FF0000"),
-    (201, 300, "Very Unhealthy",                "#8F3F97"),
-    (301, 500, "Hazardous",                     "#7E0023"),
+    (0, 50, "Good", "#00E400"),
+    (51, 100, "Moderate", "#FFFF00"),
+    (101, 150, "Unhealthy for Sensitive Groups", "#FF7E00"),
+    (151, 200, "Unhealthy", "#FF0000"),
+    (201, 300, "Very Unhealthy", "#8F3F97"),
+    (301, 500, "Hazardous", "#7E0023"),
 ]
 
 
 @dataclass
 class AQIResult:
     """Holds the calculated AQI and associated metadata."""
+
     aqi: int
     category: str
     color: str
-    pollutant: str          # Which pollutant drove the AQI ("PM2.5" or "PM10")
-    pm25_aqi: Optional[int] # Individual AQI for PM2.5 (None if input was None)
-    pm10_aqi: Optional[int] # Individual AQI for PM10 (None if input was None)
+    pollutant: str  # Which pollutant drove the AQI ("PM2.5" or "PM10")
+    pm25_aqi: int | None  # Individual AQI for PM2.5 (None if input was None)
+    pm10_aqi: int | None  # Individual AQI for PM10 (None if input was None)
 
 
-def _find_breakpoint(concentration: float, breakpoints: list) -> Optional[tuple]:
+def _find_breakpoint(concentration: float, breakpoints: list) -> tuple | None:
     """Return the matching breakpoint row for a given concentration."""
     for c_low, c_high, aqi_low, aqi_high in breakpoints:
         if c_low <= concentration <= c_high:
@@ -69,7 +68,7 @@ def _find_breakpoint(concentration: float, breakpoints: list) -> Optional[tuple]
     return None
 
 
-def _linear_interpolation(concentration: float, breakpoints: list) -> Optional[int]:
+def _linear_interpolation(concentration: float, breakpoints: list) -> int | None:
     """
     Apply the EPA piecewise linear formula:
         AQI = ((AQI_high - AQI_low) / (C_high - C_low)) * (C - C_low) + AQI_low
@@ -103,9 +102,9 @@ def _aqi_to_category(aqi: int) -> tuple[str, str]:
 
 
 def calculate_aqi(
-    pm25: Optional[float] = None,
-    pm10: Optional[float] = None,
-) -> Optional[AQIResult]:
+    pm25: float | None = None,
+    pm10: float | None = None,
+) -> AQIResult | None:
     """
     Calculate AQI from PM2.5 and/or PM10 concentrations.
 
@@ -122,8 +121,8 @@ def calculate_aqi(
         - For real-time sensors, consider passing a 24-hour rolling average or
           a NowCast-weighted average rather than instantaneous readings.
     """
-    pm25_aqi: Optional[int] = None
-    pm10_aqi: Optional[int] = None
+    pm25_aqi: int | None = None
+    pm10_aqi: int | None = None
 
     if pm25 is not None:
         pm25_aqi = _linear_interpolation(_truncate_pm25(pm25), _PM25_BREAKPOINTS)
@@ -134,7 +133,7 @@ def calculate_aqi(
     # Determine dominant pollutant (highest AQI wins)
     candidates = {
         "PM2.5": pm25_aqi,
-        "PM10":  pm10_aqi,
+        "PM10": pm10_aqi,
     }
     valid = {k: v for k, v in candidates.items() if v is not None}
 
@@ -159,7 +158,8 @@ def calculate_aqi(
 # NowCast helper — useful for real-time / recent sensor data
 # ---------------------------------------------------------------------------
 
-def nowcast_average(hourly_readings: list[Optional[float]]) -> Optional[float]:
+
+def nowcast_average(hourly_readings: list[float | None]) -> float | None:
     """
     Compute a NowCast weighted average from up to 12 hours of hourly PM readings.
 
@@ -199,7 +199,7 @@ def nowcast_average(hourly_readings: list[Optional[float]]) -> Optional[float]:
     weight_total = 0.0
     for i, val in enumerate(readings):
         if val is not None:
-            w = weight ** i
+            w = weight**i
             weighted_sum += val * w
             weight_total += w
 

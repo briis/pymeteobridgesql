@@ -3,6 +3,7 @@ while developing the module.
 
 Create a .env file and add STATION_ID with the id of your station and API_TOKEN with the personal Token.
 """
+
 from __future__ import annotations
 
 import asyncio
@@ -16,6 +17,7 @@ from dotenv import load_dotenv
 from pymeteobridgesql import MeteobridgeSQL
 
 _LOGGER = logging.getLogger(__name__)
+
 
 async def main() -> None:
     """Async test module."""
@@ -73,7 +75,6 @@ async def main() -> None:
     except Exception as err:
         print(err)
 
-
     # try:
     #     result = await weather.async_get_forecast(True)
     #     for row in result:
@@ -119,5 +120,6 @@ async def main() -> None:
     end = time.time()
 
     _LOGGER.info("Execution time: %s seconds", round(end - start, 3))
+
 
 asyncio.run(main())

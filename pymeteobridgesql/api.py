@@ -1,4 +1,5 @@
 """This module contains the code to get weather data from an MYSQL Table."""
+
 from __future__ import annotations
 
 import logging
@@ -109,14 +110,10 @@ class MeteobridgeSQL:
     async def async_get_realtime_data(self, station_id: str) -> RealtimeData:
         """Get the latest data from the database."""
         try:
-            self._cursor.execute(
-                f"SELECT * FROM realtime_data WHERE ID = '{station_id}'"
-            )
+            self._cursor.execute(f"SELECT * FROM realtime_data WHERE ID = '{station_id}'")
             row: Any = self._cursor.fetchone()
         except mysql.connector.Error as err:
-            raise MeteobridgeSQLDataError(
-                f"Failed to lookup data in the database: {err.msg}"
-            ) from err
+            raise MeteobridgeSQLDataError(f"Failed to lookup data in the database: {err.msg}") from err
 
         if row is None:
             raise MeteobridgeSQLDataError(f"No realtime data found for station ID: {station_id}")
@@ -132,9 +129,7 @@ class MeteobridgeSQL:
             )
             row: Any = self._cursor.fetchone()
         except mysql.connector.Error as err:
-            raise MeteobridgeSQLDataError(
-                f"Failed to lookup data in the database: {err.msg}"
-            ) from err
+            raise MeteobridgeSQLDataError(f"Failed to lookup data in the database: {err.msg}") from err
 
         if row is None:
             raise MeteobridgeSQLDataError(f"No station data found for station ID: {station_id}")
@@ -145,9 +140,7 @@ class MeteobridgeSQL:
         """Get the latest forecast."""
         if hourly:
             try:
-                self._cursor.execute(
-                    "SELECT * FROM forecast_hourly WHERE `datetime` >= NOW() LIMIT 48;"
-                )
+                self._cursor.execute("SELECT * FROM forecast_hourly WHERE `datetime` >= NOW() LIMIT 48;")
                 rows: list[Any] = self._cursor.fetchall()
             except mysql.connector.Error as err:
                 raise MeteobridgeSQLDataError(

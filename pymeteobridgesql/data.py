@@ -186,8 +186,22 @@ class RealtimeData:
             return None
 
         directions = [
-            "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
-            "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW",
+            "N",
+            "NNE",
+            "NE",
+            "ENE",
+            "E",
+            "ESE",
+            "SE",
+            "SSE",
+            "S",
+            "SSW",
+            "SW",
+            "WSW",
+            "W",
+            "WNW",
+            "NW",
+            "NNW",
         ]
         index = round(self.windbearing / 22.5) % 16
         return directions[index].lower()
@@ -459,5 +473,3 @@ class MonthlyData:
             "air_quality_low": self.air_quality_low,
             "air_quality_high": self.air_quality_high,
         }
-
-
