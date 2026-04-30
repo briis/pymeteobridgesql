@@ -1,4 +1,14 @@
 
+# Release 1.5.0
+
+**Date**: `2026-04-30`
+
+## What Changed
+
+* Refactor all code
+* Upgrade dev environment to Python 3.14
+* Added new AQI calculation method, that uses both PM 2.5 and PM 10 to calculate the result
+
 # Release 1.4.0
 
 **Date**: `2025-02-23`
