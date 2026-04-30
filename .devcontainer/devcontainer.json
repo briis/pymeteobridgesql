@@ -1,7 +1,7 @@
 // See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
 	"name": "pymeteobridgesql",
-	"image": "python:3.11-bookworm",
+	"image": "mcr.microsoft.com/devcontainers/base:debian",
 	"containerEnv": {
 		"TZ": "Europe/Copenhagen"
 	},
