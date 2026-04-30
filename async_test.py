@@ -1,18 +1,23 @@
-# ruff: noqa: F401
-"""This module is only used to run some realtime data tests using the async functions, while developing the module.
+"""This module is only used to run some realtime data tests using the async functions,
+while developing the module.
 
 Create a .env file and add STATION_ID with the id of your station and API_TOKEN with the personal Token.
 """
+
 from __future__ import annotations
 
-from dotenv import load_dotenv
-import os
-import logging
 import asyncio
+import logging
+import os
 import time
+from pathlib import Path
+
+from dotenv import load_dotenv
+
 from pymeteobridgesql import MeteobridgeSQL
 
 _LOGGER = logging.getLogger(__name__)
+
 
 async def main() -> None:
     """Async test module."""
@@ -20,12 +25,26 @@ async def main() -> None:
     logging.basicConfig(level=logging.DEBUG)
     start = time.time()
 
-    load_dotenv()
-    _host = os.getenv("HOST")
-    _user = os.getenv("USER")
-    _password = os.getenv("PASSWORD")
-    _database = os.getenv("DATABASE")
-    _id = os.getenv("ID")
+    load_dotenv(Path(__file__).parent / ".env")
+    _host = os.getenv("HOST") or ""
+    _user = os.getenv("USER") or ""
+    _password = os.getenv("PASSWORD") or ""
+    _database = os.getenv("DATABASE") or ""
+    _id = os.getenv("ID") or ""
+
+    missing = [
+        k
+        for k, v in {
+            "HOST": _host,
+            "USER": _user,
+            "PASSWORD": _password,
+            "DATABASE": _database,
+            "ID": _id,
+        }.items()
+        if not v
+    ]
+    if missing:
+        raise ValueError(f"Missing required .env variables: {', '.join(missing)}")
 
     weather = MeteobridgeSQL(_host, _user, _password, _database)
     await weather.async_init()
@@ -39,6 +58,7 @@ async def main() -> None:
         print("FEELS LIKE: ", result.feels_like_temperature)
         print("FREEZING ALTITUDE: ", result.freezing_altitude)
         print("PM2.5: ", result.pm25)
+        print("PM10: ", result.pm10)
         print("AIR QUALITY: ", result.aqi)
         print("TEMPERATURE: ", result.temperature)
         print("RAIN TODAY: ", result.raintoday)
@@ -68,7 +88,6 @@ async def main() -> None:
 
     except Exception as err:
         print(err)
-
 
     # try:
     #     result = await weather.async_get_forecast(True)
@@ -115,5 +134,6 @@ async def main() -> None:
     end = time.time()
 
     _LOGGER.info("Execution time: %s seconds", round(end - start, 3))
+
 
 asyncio.run(main())
