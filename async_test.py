@@ -9,6 +9,7 @@ import asyncio
 import logging
 import os
 import time
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -22,7 +23,7 @@ async def main() -> None:
     logging.basicConfig(level=logging.DEBUG)
     start = time.time()
 
-    load_dotenv()
+    load_dotenv(Path(__file__).parent / ".env")
     _host = os.getenv("HOST")
     _user = os.getenv("USER")
     _password = os.getenv("PASSWORD")
