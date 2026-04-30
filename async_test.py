@@ -42,6 +42,7 @@ async def main() -> None:
         print("FEELS LIKE: ", result.feels_like_temperature)
         print("FREEZING ALTITUDE: ", result.freezing_altitude)
         print("PM2.5: ", result.pm25)
+        print("PM10: ", result.pm10)
         print("AIR QUALITY: ", result.aqi)
         print("TEMPERATURE: ", result.temperature)
         print("RAIN TODAY: ", result.raintoday)

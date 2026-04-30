@@ -6,6 +6,8 @@ import datetime
 import math
 from dataclasses import dataclass
 
+from .aqi_calculator import calculate_aqi
+
 
 @dataclass(frozen=True)
 class RealtimeData:
@@ -60,7 +62,8 @@ class RealtimeData:
     @property
     def aqi(self) -> int | None:
         """Air Quality Index."""
-        return aqi_from_pm25(self.pm25)
+        result = calculate_aqi(pm25=self.pm25, pm10=self.pm10)
+        return result.aqi if result is not None else None
 
     @property
     def beaufort_description(self) -> str | None:
@@ -458,36 +461,3 @@ class MonthlyData:
         }
 
 
-def aqi_from_pm25(pm25: float) -> int | None:
-    """Calculate the Air Quality Index from the PM2.5 value."""
-    if pm25 is None:
-        return None
-
-    if pm25 > 500:
-        return 500
-    if pm25 < 0:
-        return 0
-
-    if pm25 > 350.5:
-        return round(calc_aqi(pm25, 500, 401, 500.0, 350.5))
-    if pm25 > 250.5:
-        return round(calc_aqi(pm25, 400, 301, 350.4, 250.5))
-    if pm25 > 150.5:
-        return round(calc_aqi(pm25, 300, 201, 250.4, 150.5))
-    if pm25 > 55.5:
-        return round(calc_aqi(pm25, 200, 151, 150.4, 55.5))
-    if pm25 > 35.5:
-        return round(calc_aqi(pm25, 150, 101, 55.4, 35.5))
-    if pm25 > 12.1:
-        return round(calc_aqi(pm25, 100, 51, 35.4, 12.1))
-    if pm25 > 0:
-        return round(calc_aqi(pm25, 50, 0, 12.0, 0.0))
-    return 0
-
-
-def calc_aqi(pm25: float, ih: float, il: float, bph: float, bpl: float) -> float:
-    """Calculate the Air Quality Index from the PM2.5 value."""
-    _val1 = ih - il
-    _val2 = bph - bpl
-    _val3 = pm25 - bpl
-    return float(_val1 / _val2 * _val3 + il)
