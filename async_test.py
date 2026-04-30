@@ -26,11 +26,15 @@ async def main() -> None:
     start = time.time()
 
     load_dotenv(Path(__file__).parent / ".env")
-    _host = os.getenv("HOST")
-    _user = os.getenv("USER")
-    _password = os.getenv("PASSWORD")
-    _database = os.getenv("DATABASE")
-    _id = os.getenv("ID")
+    _host = os.getenv("HOST") or ""
+    _user = os.getenv("USER") or ""
+    _password = os.getenv("PASSWORD") or ""
+    _database = os.getenv("DATABASE") or ""
+    _id = os.getenv("ID") or ""
+
+    missing = [k for k, v in {"HOST": _host, "USER": _user, "PASSWORD": _password, "DATABASE": _database, "ID": _id}.items() if not v]
+    if missing:
+        raise ValueError(f"Missing required .env variables: {', '.join(missing)}")
 
     weather = MeteobridgeSQL(_host, _user, _password, _database)
     await weather.async_init()
