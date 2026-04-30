@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import datetime
 import math
+from dataclasses import dataclass
+
 
 @dataclass(frozen=True)
 class RealtimeData:
@@ -47,7 +48,7 @@ class RealtimeData:
     conditions: str
 
     @property
-    def absolute_humidity(self) -> float:
+    def absolute_humidity(self) -> float | None:
         """Aboslute Humidity (g.m-3)."""
         if self.temperature is None or self.humidity is None:
             return None
@@ -57,12 +58,12 @@ class RealtimeData:
         return (1320.65 / kelvin) * humidity * (10 ** ((7.4475 * (kelvin - 273.14)) / (kelvin - 39.44)))
 
     @property
-    def aqi(self) -> int:
+    def aqi(self) -> int | None:
         """Air Quality Index."""
         return aqi_from_pm25(self.pm25)
 
     @property
-    def beaufort_description(self) -> str:
+    def beaufort_description(self) -> str | None:
         """Beaufort Textual Description."""
 
         if self.windspeedavg is None:
@@ -90,7 +91,7 @@ class RealtimeData:
         return None
 
     @property
-    def cloud_base(self) -> float:
+    def cloud_base(self) -> float | None:
         """Cloud Base (km)."""
         if self.elevation is None or self.temperature is None or self.dewpoint is None:
             return None
@@ -98,9 +99,15 @@ class RealtimeData:
         return (self.temperature - self.dewpoint) * 126 + self.elevation
 
     @property
-    def feels_like_temperature(self) -> float:
+    def feels_like_temperature(self) -> float | None:
         """Calculate feels like temperature using windchill and heatindex."""
-        if self.windchill is not None and self.heatindex is not None and self.temperature is not None and self.humidity is not None and self.windspeedavg is not None:
+        if (
+            self.windchill is not None
+            and self.heatindex is not None
+            and self.temperature is not None
+            and self.humidity is not None
+            and self.windspeedavg is not None
+        ):
             if self.temperature > 26.7 and self.humidity > 40:
                 return self.heatindex
             if self.temperature < 10 and self.windspeedavg > 4.8:
@@ -112,13 +119,13 @@ class RealtimeData:
     def freezing_altitude(self) -> float:
         """Freezing Altitude."""
         if self.elevation is None or self.temperature is None:
-            return None
+            return 0.0
 
         _freezing_line = (192 * self.temperature) + self.elevation
-        return 0 if _freezing_line < 0 else _freezing_line
+        return max(_freezing_line, 0)
 
     @property
-    def pressuretrend_text(self) -> str:
+    def pressuretrend_text(self) -> str | None:
         """Converts the pressure trend to text."""
         if self.pressuretrend is None:
             return None
@@ -130,7 +137,7 @@ class RealtimeData:
         return "steady"
 
     @property
-    def uv_description(self) -> str:
+    def uv_description(self) -> str | None:
         """UV value description."""
         if self.uv is None:
             return None
@@ -149,7 +156,7 @@ class RealtimeData:
         return None
 
     @property
-    def visibility(self) -> float:
+    def visibility(self) -> float | None:
         """Visibility (km)."""
         if self.elevation is None or self.temperature is None or self.dewpoint is None:
             return None
@@ -170,12 +177,15 @@ class RealtimeData:
         return float(_max_visibility * _percent_reduction)
 
     @property
-    def wind_direction(self) -> str:
+    def wind_direction(self) -> str | None:
         """Calculates the wind direction from the wind bearing."""
         if self.windbearing is None:
             return None
 
-        directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
+        directions = [
+            "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+            "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW",
+        ]
         index = round(self.windbearing / 22.5) % 16
         return directions[index].lower()
 
@@ -228,6 +238,7 @@ class RealtimeData:
             "wind_direction": self.wind_direction,
         }
 
+
 @dataclass(frozen=True)
 class ForecastHourly:
     hour_num: int
@@ -264,6 +275,7 @@ class ForecastHourly:
             "uv_index": self.uv_index,
             "visibility": self.visibility,
         }
+
 
 @dataclass(frozen=True)
 class ForecastDaily:
@@ -302,6 +314,7 @@ class ForecastDaily:
             "conditions": self.conditions,
         }
 
+
 @dataclass(frozen=True)
 class StationData:
     ID: str
@@ -318,9 +331,9 @@ class MinuteData:
     logdate: datetime.datetime
     temperature: float
     wind_chill: float
-    air_Quality_pm1: float
-    air_Quality_pm10: float
-    air_Quality_pm25: float
+    air_quality_pm1: float
+    air_quality_pm10: float
+    air_quality_pm25: float
     heat_index: float
     humidity: int
     dewpoint: float
@@ -341,9 +354,9 @@ class MinuteData:
             "logdate": self.logdate,
             "temperature": self.temperature,
             "wind_chill": self.wind_chill,
-            "air_Quality_pm1": self.air_Quality_pm1,
-            "air_Quality_pm10": self.air_Quality_pm10,
-            "air_Quality_pm25": self.air_Quality_pm25,
+            "air_quality_pm1": self.air_quality_pm1,
+            "air_quality_pm10": self.air_quality_pm10,
+            "air_quality_pm25": self.air_quality_pm25,
             "heat_index": self.heat_index,
             "humidity": self.humidity,
             "dewpoint": self.dewpoint,
@@ -406,6 +419,7 @@ class DailyData:
             "visibility_high": self.visibility_high,
         }
 
+
 @dataclass(frozen=True)
 class MonthlyData:
     logdate: datetime.date
@@ -443,7 +457,8 @@ class MonthlyData:
             "air_quality_high": self.air_quality_high,
         }
 
-def aqi_from_pm25(pm25: float) -> int:
+
+def aqi_from_pm25(pm25: float) -> int | None:
     """Calculate the Air Quality Index from the PM2.5 value."""
     if pm25 is None:
         return None
@@ -454,28 +469,25 @@ def aqi_from_pm25(pm25: float) -> int:
         return 0
 
     if pm25 > 350.5:
-        return calcAQI(pm25, 500, 401, 500, 350.5)
+        return round(calc_aqi(pm25, 500, 401, 500.0, 350.5))
     if pm25 > 250.5:
-        return calcAQI(pm25, 400, 301, 350.4, 250.5)
+        return round(calc_aqi(pm25, 400, 301, 350.4, 250.5))
     if pm25 > 150.5:
-        return calcAQI(pm25, 300, 201, 250.4, 150.5)
+        return round(calc_aqi(pm25, 300, 201, 250.4, 150.5))
     if pm25 > 55.5:
-        return calcAQI(pm25, 200, 151, 150.4, 55.5)
+        return round(calc_aqi(pm25, 200, 151, 150.4, 55.5))
     if pm25 > 35.5:
-        return calcAQI(pm25, 150, 101, 55.4, 35.5)
+        return round(calc_aqi(pm25, 150, 101, 55.4, 35.5))
     if pm25 > 12.1:
-        return calcAQI(pm25, 100, 51, 35.4, 12.1)
+        return round(calc_aqi(pm25, 100, 51, 35.4, 12.1))
     if pm25 > 0:
-        return calcAQI(pm25, 50, 0, 12, 0)
+        return round(calc_aqi(pm25, 50, 0, 12.0, 0.0))
     return 0
 
-def calcAQI(pm25: float, ih: int, il: int, bph: int, bpl: int) -> float:
+
+def calc_aqi(pm25: float, ih: float, il: float, bph: float, bpl: float) -> float:
     """Calculate the Air Quality Index from the PM2.5 value."""
-    if pm25 is None:
-        return None
-
-    _val1 = (ih - il)
-    _val2 = (bph - bpl)
-    _val3 = (pm25 - bpl)
+    _val1 = ih - il
+    _val2 = bph - bpl
+    _val3 = pm25 - bpl
     return float(_val1 / _val2 * _val3 + il)
-
