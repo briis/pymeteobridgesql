@@ -1,4 +1,12 @@
 
+# Release 1.6.0
+
+**Date**: `2026-05-08`
+
+## What Changed
+
+* No changes to the Python Wrapper, only new fetch PHP script to add pollen data for denmark to the database.
+
 # Release 1.5.0
 
 **Date**: `2026-04-30`

@@ -5,6 +5,6 @@
 		}
 	],
 	"settings": {
-		"php.validate.executablePath": "/opt/homebrew/opt/php/bin",
+		"php.validate.executablePath": "/usr/bin/php8.4",
 	}
 }
