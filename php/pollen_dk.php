@@ -153,7 +153,7 @@ foreach ($stations as $station_id => $region) {
         fn($k, $v) => "`$k` = " . ($v === null ? "NULL" : "'" . mysqli_real_escape_string($conn, (string)$v) . "'"),
         array_keys($row),
         array_values($row)
-    ));
+    )) . ", `updated_at` = NOW()";
 
     $sql = "INSERT INTO `pollen_data` ($cols) VALUES ($vals) ON DUPLICATE KEY UPDATE $updates";
     if (!mysqli_query($conn, $sql)) {
