@@ -146,6 +146,23 @@ foreach ($stations as $station_id => $region) {
                 $predictions, $overrides, $today_iso,
                 $name, $thresholds, $severity_index_map
             );
+            // If today is absent from predictions, use the nearest future prediction
+            if ($severity === "unknown" && !empty($predictions)) {
+                $pred_keys = array_keys($predictions);
+                usort($pred_keys, fn($a, $b) => strcmp(toIsoDate($a), toIsoDate($b)));
+                foreach ($pred_keys as $k) {
+                    if (toIsoDate($k) > $today_iso) {
+                        $severity = parsePrediction(
+                            $predictions, $overrides, toIsoDate($k),
+                            $name, $thresholds, $severity_index_map
+                        );
+                        break;
+                    }
+                }
+            }
+            if ($severity === "unknown") {
+                $severity = $inSeason ? calcSeverity($name, $count, $thresholds) : "none";
+            }
         }
         $today_row[$name . "_count"]    = $count;
         $today_row[$name . "_severity"] = $severity;
