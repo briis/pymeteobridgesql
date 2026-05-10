@@ -1,4 +1,13 @@
 
+# Release 1.6.1
+
+**Date**: `2026-05-10`
+
+## What Changed
+
+* No changes to the Python Wrapper
+* Modified the Pollen Script to retrieve 5 day Pollen forecast
+
 # Release 1.6.0
 
 **Date**: `2026-05-08`
