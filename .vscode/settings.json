@@ -1,9 +1,14 @@
 {
     "python-envs.pythonProjects": [
         {
-            "path": "",
+            "path": ".",
             "envManager": "ms-python.python:system",
             "packageManager": "ms-python.python:pip"
         }
-    ]
+    ],
+    "explorer.excludeGitIgnore": false,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true
+    }
 }

@@ -1,4 +1,31 @@
 
+# Release 1.6.1
+
+**Date**: `2026-05-10`
+
+## What Changed
+
+* No changes to the Python Wrapper
+* Modified the Pollen Script to retrieve 5 day Pollen forecast
+
+# Release 1.6.0
+
+**Date**: `2026-05-08`
+
+## What Changed
+
+* No changes to the Python Wrapper, only new fetch PHP script to add pollen data for denmark to the database.
+
+# Release 1.5.0
+
+**Date**: `2026-04-30`
+
+## What Changed
+
+* Refactor all code
+* Upgrade dev environment to Python 3.14
+* Added new AQI calculation method, that uses both PM 2.5 and PM 10 to calculate the result
+
 # Release 1.4.0
 
 **Date**: `2025-02-23`

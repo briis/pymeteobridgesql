@@ -4,9 +4,9 @@
 from __future__ import annotations
 
 from .api import MeteobridgeSQL, MeteobridgeSQLDatabaseConnectionError, MeteobridgeSQLDataError
-from .data import ForecastDaily, ForecastHourly, MinuteData, MonthlyData, RealtimeData, StationData
+from .data import DailyData, ForecastDaily, ForecastHourly, MinuteData, MonthlyData, RealtimeData, StationData
 
 __title__ = "pymeteobridgesql"
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 __author__ = "briis"
 __license__ = "MIT"

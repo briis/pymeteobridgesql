@@ -17,7 +17,7 @@ $station_id = $_ENV["STATION_ID"];
 // ***************************************
 // Return Forecast data from Visual Crossing
 // ***************************************
-$url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/roskilde?unitGroup=metric&lang=da&iconSet=icons2&key=" . $api_key . "&contentType=json";
+$url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/55.737338,12.165861?unitGroup=metric&lang=da&iconSet=icons2&key=" . $api_key . "&contentType=json";
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, $url);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
