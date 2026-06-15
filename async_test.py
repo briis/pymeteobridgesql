@@ -68,6 +68,7 @@ async def main() -> None:
         print("WIND BEARING DAY AVG: ", result.windbearingdavg)
         print("WIND DIRECTION: ", result.wind_direction)
         print("WIND GUST: ", result.windgust)
+        print("WIND GUST HIGH: ", result.windgusthigh)
         print("")
 
     except Exception as err:
