@@ -1,4 +1,12 @@
 
+# Release 1.6.2
+
+**Date**: `2026-06-15`
+
+## What Changed
+
+* Added 2 new sensors Wind Speed Average and Wind Gust Day High
+
 # Release 1.6.1
 
 **Date**: `2026-05-10`
