@@ -49,6 +49,7 @@ class RealtimeData:
     icon: str
     conditions: str
     windgusthigh: float
+    windspeed: float
 
     @property
     def absolute_humidity(self) -> float | None:

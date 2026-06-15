@@ -1,6 +1,6 @@
 [project]
 name = "pymeteobridgesql"
-version = "1.6.1"
+version = "1.6.2"
 description = "Gets weather data from a MySQL table"
 readme = "README.md"
 license = {text = "MIT"}
